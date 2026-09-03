@@ -11,7 +11,9 @@
   "sections": {
     "zev_header": {
       "type": "zev-collection-header",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/ZEVARAZ_third_image_3000px_banner.png"
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
