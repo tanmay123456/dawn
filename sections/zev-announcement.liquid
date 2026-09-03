@@ -1,0 +1,106 @@
+{%- comment -%}
+  Zevaraz — Announcement bar (homepage section 1.1)
+  Graphite. Three claims, centred, separated by a middot. No carousel — the
+  hallmark claim is always first and always visible.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+{%- liquid
+  assign visible = 0
+  for block in section.blocks
+    if block.settings.text != blank
+      assign visible = visible | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if visible > 0 -%}
+  <div class="zev-ann">
+    <p class="zev-ann__row">
+      {%- assign i = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.settings.text != blank -%}
+          {%- assign i = i | plus: 1 -%}
+          {%- if i > 1 -%}<span class="zev-ann__sep" aria-hidden="true">&middot;</span>{%- endif -%}
+          <span
+            class="zev-ann__item zev-ann__item--{{ block.settings.emphasis }}{% if block.settings.hide_mobile %} zev-ann__item--desk{% endif %}"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.text }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </p>
+  </div>
+{%- endif -%}
+
+{%- style -%}
+  .zev-ann {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 var(--zev-gutter, 56px);
+    background: var(--zev-graphite, #1C1C1C);
+  }
+  .zev-ann__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font: 400 12px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .zev-ann__item--silver { color: var(--zev-silver, #C0C0C0); }
+  .zev-ann__item--ivory  { color: var(--zev-on-dark, #F8F8F6); }
+  .zev-ann__sep { color: #3A3A3A; }
+
+  @media (max-width: 749px) {
+    .zev-ann { height: 32px; padding: 0 var(--zev-gutter, 20px); }
+    .zev-ann__row { font-size: 10px; letter-spacing: .12em; gap: 8px; }
+    /* Three claims do not fit at 390px. The third drops, never the hallmark. */
+    .zev-ann__item--desk,
+    .zev-ann__item--desk + .zev-ann__sep,
+    .zev-ann__sep:has(+ .zev-ann__item--desk) { display: none; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "tag": "section",
+  "class": "zev-ann-section",
+  "max_blocks": 4,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "claim",
+      "name": "Claim",
+      "settings": [
+        { "id": "text", "type": "text", "label": "Text" },
+        {
+          "id": "emphasis",
+          "type": "select",
+          "label": "Colour",
+          "options": [
+            { "value": "silver", "label": "Silver" },
+            { "value": "ivory", "label": "Ivory (emphasised)" }
+          ],
+          "default": "silver"
+        },
+        { "id": "hide_mobile", "type": "checkbox", "label": "Hide on mobile", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "claim", "settings": { "text": "92.5 Hallmarked Sterling Silver", "emphasis": "silver" } },
+        { "type": "claim", "settings": { "text": "Free shipping over ₹2,000", "emphasis": "ivory" } },
+        { "type": "claim", "settings": { "text": "Direct from Jaipur", "emphasis": "silver", "hide_mobile": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

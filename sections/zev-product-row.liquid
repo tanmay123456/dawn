@@ -1,0 +1,111 @@
+{%- comment -%}
+  Zevaraz — Product row
+  Homepage section 1.7 "New in", and the PDP "Wear it with" row in compact mode.
+  Uses the shared card snippet so all three grids stay identical.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+{%- assign products = section.settings.collection.products -%}
+
+{%- if products.size > 0 -%}
+  <div class="zev-row zev-row--{{ section.settings.density }}">
+    <div class="zev-row__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="zev-row__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="zev-row__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.link_label != blank -%}
+        <a class="zev-row__link" href="{{ section.settings.collection.url }}">{{ section.settings.link_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="zev-row__grid">
+      {%- for product in products limit: section.settings.count -%}
+        {% render 'zev-product-card', product: product, show_quick_add: section.settings.quick_add, compact: section.settings.density %}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- style -%}
+  .zev-row {
+    background: var(--zev-ivory, #F8F8F6);
+    padding: var(--zev-section, 88px) var(--zev-gutter, 56px);
+  }
+  .zev-row--compact { padding: 70px var(--zev-gutter, 56px) 84px; }
+  .zev-row__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 34px;
+  }
+  .zev-row__eyebrow {
+    margin: 0 0 12px;
+    font: 500 11px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--zev-emerald, #0F6452);
+  }
+  .zev-row__heading {
+    margin: 0;
+    font: 600 var(--zev-h2, 40px)/1.12 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-row--compact .zev-row__heading { font-size: 30px; }
+  .zev-row__link {
+    flex: none;
+    font: 400 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-ink, #1C1C1C);
+    text-decoration: none;
+    border-bottom: 1px solid var(--zev-silver, #C0C0C0);
+    padding-bottom: 5px;
+    transition: border-color .15s ease;
+  }
+  .zev-row__link:hover { border-color: var(--zev-ink, #1C1C1C); }
+  .zev-row__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 989px) {
+    .zev-row__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 749px) {
+    .zev-row__head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+    .zev-row__grid { gap: 12px; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Product row",
+  "tag": "section",
+  "class": "zev-row-section",
+  "settings": [
+    { "id": "eyebrow", "type": "text", "label": "Eyebrow", "default": "New in · Ratna" },
+    { "id": "heading", "type": "text", "label": "Heading", "default": "Silver meets colour" },
+    { "id": "collection", "type": "collection", "label": "Collection" },
+    { "id": "link_label", "type": "text", "label": "Link label", "default": "Shop Ratna" },
+    { "id": "count", "type": "range", "label": "Products", "min": 2, "max": 8, "step": 1, "default": 4 },
+    {
+      "id": "density",
+      "type": "select",
+      "label": "Style",
+      "options": [
+        { "value": "full", "label": "Full — homepage" },
+        { "value": "compact", "label": "Compact — Wear it with" }
+      ],
+      "default": "full"
+    },
+    { "id": "quick_add", "type": "checkbox", "label": "Show quick add on hover", "default": false }
+  ],
+  "presets": [{ "name": "Product row" }]
+}
+{% endschema %}
