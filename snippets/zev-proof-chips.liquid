@@ -1,0 +1,44 @@
+{%- comment -%}
+  Zevaraz — PDP proof chips (buy box, item 5)
+  Usage: {% render 'zev-proof-chips', product: product %}
+  Every chip after the first is metafield-driven and renders only when populated.
+  The hallmark chip is unconditional and always first.
+{%- endcomment -%}
+
+{%- liquid
+  assign weight = product.metafields.custom.gross_weight.value
+  assign nickel_free = product.metafields.custom.nickel_free.value
+-%}
+
+<ul class="zev-chips">
+  <li class="zev-chips__item zev-chips__item--accent">925 BIS hallmarked</li>
+
+  {%- if nickel_free -%}
+    <li class="zev-chips__item">Nickel-free</li>
+  {%- endif -%}
+
+  {%- if weight != blank and weight > 0 -%}
+    <li class="zev-chips__item">{{ weight }} g</li>
+  {%- endif -%}
+</ul>
+
+{%- style -%}
+  .zev-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .zev-chips__item {
+    padding: 9px 13px;
+    background: var(--zev-stone, #F1EEE8);
+    font: 500 11px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--zev-quiet, #6B6764);
+    border-radius: var(--zev-radius, 0);
+  }
+  .zev-chips__item--accent { color: var(--zev-emerald, #0F6452); }
+{%- endstyle -%}

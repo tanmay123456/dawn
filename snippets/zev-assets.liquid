@@ -1,0 +1,13 @@
+{%- comment -%}
+  Zevaraz — asset loader
+  Rendered at the top of every zev-* section so the token layer and the exact
+  font weights are present without editing layout/theme.liquid. Repeated tags
+  are deduplicated by the browser; this costs nothing after the first section.
+
+  If you prefer it in one place, move these three lines into theme.liquid
+  before </head> and delete the render calls.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap">
+{{ 'zev-tokens.css' | asset_url | stylesheet_tag }}

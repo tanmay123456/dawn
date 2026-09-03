@@ -1,0 +1,14 @@
+{%- comment -%}
+  Zevaraz — global asset loader.
+  Sits first in the header group so the token layer and the Playfair/Montserrat
+  weights load on every page, including cart, search and account pages that
+  carry no other zev-* section. Outputs link tags only, nothing visible.
+{%- endcomment -%}
+{% render 'zev-assets' %}
+
+{% schema %}
+{
+  "name": "Zevaraz assets",
+  "settings": []
+}
+{% endschema %}
