@@ -13,7 +13,7 @@
       "type": "zev-statement",
       "settings": {
         "scheme": "ivory",
-        "size": "opening",
+        "size": "closing",
         "eyebrow": "Our craft",
         "heading": "Premium silver, made accessible — without compromising authenticity or craft",
         "body": "",
@@ -23,7 +23,10 @@
     },
     "workshop_image": {
       "type": "zev-image-full",
-      "settings": { "height": 520 }
+      "settings": {
+        "image": "shopify://shop_images/Model_wearing_luxury_jewelry_2K_202609031235.jpg",
+        "height": 520
+      }
     },
     "pillars": {
       "type": "zev-pillars",
@@ -50,19 +53,59 @@
           }
         }
       },
-      "block_order": ["heritage", "authenticity", "accessibility"],
+      "block_order": [
+        "heritage",
+        "authenticity",
+        "accessibility"
+      ],
       "settings": {}
     },
     "process": {
       "type": "zev-process",
       "blocks": {
-        "s1": { "type": "step", "settings": { "title": "Sourcing", "body": "" } },
-        "s2": { "type": "step", "settings": { "title": "Casting & forming", "body": "" } },
-        "s3": { "type": "step", "settings": { "title": "Setting & finishing", "body": "" } },
-        "s4": { "type": "step", "settings": { "title": "Hallmarking", "body": "" } },
-        "s5": { "type": "step", "settings": { "title": "Packing", "body": "" } }
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Sourcing",
+            "body": ""
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Casting & forming",
+            "body": ""
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Setting & finishing",
+            "body": ""
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "title": "Hallmarking",
+            "body": ""
+          }
+        },
+        "s5": {
+          "type": "step",
+          "settings": {
+            "title": "Packing",
+            "body": ""
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ],
       "settings": {
         "eyebrow": "From cast to clasp",
         "heading": "Six karigars, Vaishali Nagar",
@@ -82,5 +125,11 @@
       }
     }
   },
-  "order": ["statement", "workshop_image", "pillars", "process", "closing"]
+  "order": [
+    "statement",
+    "workshop_image",
+    "pillars",
+    "process",
+    "closing"
+  ]
 }
