@@ -1,0 +1,69 @@
+/* Zevaraz — Dawn 16 compatibility layer.
+   zev-tokens.css was authored against an older Dawn. Dawn 16 restructured the
+   product card: .card-information is now nested inside .card__information,
+   below the heading, rather than being the card's own meta row. These rules
+   restore the two details that depend on it — the title/price row and the
+   925 chip. Loaded immediately after zev-tokens.css. */
+
+/* Meta row: title on the left, subtitle and price on the right, baselines aligned. */
+.card-wrapper .card__content > .card__information {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: var(--zev-card-pad, 22px);
+}
+.card-wrapper .card__content > .card__information > .card__heading {
+  margin: 0;
+  flex: 1 1 auto;
+}
+.card-wrapper .card__content > .card__information > .card-information {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex: 0 0 auto;
+  padding: 0;
+  text-align: right;
+}
+.card-wrapper .card-information .price { white-space: nowrap; }
+.card-wrapper .card-information .caption-large:empty { display: none; }
+
+/* The 925 chip sits on the image, bottom right. */
+.card-wrapper .card__inner { position: relative; }
+.card-wrapper .card__inner::after {
+  content: '925 · BIS';
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+  padding: 7px 11px;
+  background: rgba(248, 248, 246, .94);
+  font: 400 10px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+  letter-spacing: .1em;
+  color: var(--zev-quiet, #6B6764);
+  pointer-events: none;
+}
+
+/* Cart drawer trust line. The design puts this under the checkout button.
+   Adding it here avoids patching Dawn's own cart-drawer snippet.
+   The free-shipping progress bar from the design is deliberately absent:
+   shipping is free on every order, so there is no threshold to cross. */
+.cart-drawer .cart__ctas::after {
+  content: 'Every piece 92.5 hallmarked · Hallmark certificate included · 7-day returns';
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  font: 400 11px/1.6 var(--zev-font-text, 'Montserrat', sans-serif);
+  color: var(--zev-taupe, #A8999C);
+}
+
+@media (max-width: 749px) {
+  .card-wrapper .card__content > .card__information { padding: 14px; gap: 10px; }
+  .card-wrapper .card__inner::after {
+    right: 8px;
+    bottom: 8px;
+    padding: 5px 8px;
+    font-size: 9px;
+  }
+}
