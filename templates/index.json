@@ -9,214 +9,104 @@
  */
 {
   "sections": {
-    "176987452385ada2da": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_52fe72d_wG4JEE": {
-          "type": "ai_gen_block_52fe72d",
-          "settings": {
-            "desktop_height": 100,
-            "desktop_image_fit": "cover",
-            "mobile_height": 55,
-            "mobile_image_fit": "cover",
-            "autoplay": true,
-            "slide_duration": 5,
-            "transition_speed": 1,
-            "show_cta_button": false,
-            "button_text": "Shop now",
-            "button_link": "",
-            "button_font_size": 16,
-            "button_padding_vertical": 12,
-            "button_padding_horizontal": 32,
-            "button_border_radius": 4,
-            "button_border_width": 0,
-            "button_background_color": "#121212",
-            "button_text_color": "#ffffff",
-            "button_border_color": "#121212",
-            "button_hover_background_color": "#000000",
-            "button_hover_text_color": "#ffffff",
-            "slide_1_image": "shopify://shop_images/ZEV-HERO-1.jpg",
-            "slide_2_image": "shopify://shop_images/ZEV-HERO-2.png",
-            "slide_3_image": "shopify://shop_images/ZEV-HERO-3.png",
-            "custom_css": ""
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_52fe72d_wG4JEE"
-      ],
-      "settings": {}
-    },
-    "17698732491905c57b": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_e21b6aa_ehJr7x": {
-          "type": "ai_gen_block_e21b6aa",
-          "settings": {
-            "collection_1": "bangles",
-            "collection_2": "bracelets",
-            "collection_3": "earrings",
-            "collection_4": "rings",
-            "collection_5": "baby-pendants",
-            "collection_6": "necklace",
-            "collection_7": "anklets",
-            "collection_8": "toe-rings",
-            "collection_9": "kids-bracelets",
-            "collection_10": "",
-            "collection_11": "",
-            "collection_12": "",
-            "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
-            "item_spacing": 4,
-            "image_size": 150,
-            "text_size": 14,
-            "mobile_image_size": 100,
-            "mobile_text_size": 14
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_e21b6aa_ehJr7x"
-      ],
-      "settings": {}
-    },
-    "image_banner_kkREH4": {
-      "type": "image-banner",
-      "name": "t:sections.image-banner.presets.name",
+    "hero": {
+      "type": "zev-hero",
       "settings": {
-        "image": "shopify://shop_images/Generated_Image_January_30_2026_-_4_37PM.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
-        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
+        "image": "shopify://shop_images/ZEV-HERO-1.jpg",
+        "eyebrow": "Collection 01 · Aabha",
+        "heading": "Indian heritage.\nModern minimal.\nReal silver.",
+        "body": "Hallmarked 92.5 sterling silver, cut and finished in our own Jaipur workshop.",
+        "cta_label": "Shop Aabha",
+        "cta_link": "/collections/aabha-kundan-silver-rings",
+        "cta2_label": "All collections",
+        "cta2_link": "/collections"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "earrings",
-        "products_to_show": 8,
-        "title": "",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 5,
-        "enable_desktop_slider": true,
-        "full_width": true,
-        "show_view_all": true,
-        "view_all_style": "link",
-        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 12,
-        "padding_bottom": 12
-      }
-    },
-    "featured_collection_6eAGnR": {
-      "type": "featured-collection",
-      "name": "t:sections.featured-collection.presets.name",
-      "settings": {
-        "collection": "bangles",
-        "products_to_show": 8,
-        "title": "",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 5,
-        "enable_desktop_slider": true,
-        "full_width": true,
-        "show_view_all": true,
-        "view_all_style": "link",
-        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn_yTLQMg": {
-      "type": "multicolumn",
+    "trust": {
+      "type": "zev-trust-bar",
       "blocks": {
-        "column_b4TyRH": {
-          "type": "column",
-          "settings": {
-            "title": "Crafted in 925 Silver",
-            "text": "<p>Genuine sterling silver designed for everyday wear.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_mkiBA3": {
-          "type": "column",
-          "settings": {
-            "title": "Thoughtfully Packaged",
-            "text": "<p>Each order includes care and authenticity card with a pouch to store your jewellery</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_PNHRxR": {
-          "type": "column",
-          "settings": {
-            "title": "Designed to Last",
-            "text": "<p>Minimal forms finished with care and attention.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
+        "t1": { "type": "item", "settings": { "title": "92.5 hallmarked silver", "note": "BIS stamped on every piece" } },
+        "t2": { "type": "item", "settings": { "title": "Direct from Jaipur", "note": "Our own workshop, no middlemen" } },
+        "t3": { "type": "item", "settings": { "title": "7-day easy returns", "note": "Unworn, in original packaging" } },
+        "t4": { "type": "item", "settings": { "title": "Free shipping on all orders", "note": "Insured, tracked, 3–5 days" } }
       },
-      "block_order": [
-        "column_b4TyRH",
-        "column_mkiBA3",
-        "column_PNHRxR"
-      ],
-      "disabled": true,
-      "name": "t:sections.multicolumn.presets.name",
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": { "mobile_layout": "marquee" }
+    },
+    "navigator": {
+      "type": "zev-collection-navigator",
+      "blocks": {
+        "c1": { "type": "collection", "settings": { "collection": "aabha-kundan-silver-rings", "number": "Collection 01", "tag_line": "Kundan · Heritage" } },
+        "c2": { "type": "collection", "settings": { "collection": "rekha-silver-bracelets", "number": "Collection 02", "tag_line": "Minimal · Everyday" } },
+        "c3": { "type": "collection", "settings": { "collection": "kala-oxidised-silver", "number": "Collection 03", "tag_line": "Oxidised · Artisanal" } },
+        "c4": { "type": "collection", "settings": { "collection": "jyoti-subtle-sparkle-copy", "number": "Collection 04", "tag_line": "Gemstone · Festive" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "square",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "primary",
-        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "eyebrow": "Four collections",
+        "heading": "Start with the mood, not the metal",
+        "link_label": "View all",
+        "link_url": "/collections"
+      }
+    },
+    "hallmark": {
+      "type": "zev-hallmark-band",
+      "blocks": {
+        "p1": { "type": "proof", "settings": { "title": "Look for the 925 stamp", "note": "Inside the band or on the clasp, laser-marked." } },
+        "p2": { "type": "proof", "settings": { "title": "BIS hallmark triangle", "note": "The mark of the Bureau of Indian Standards." } },
+        "p3": { "type": "proof", "settings": { "title": "It tarnishes, gently", "note": "Real silver ages. Plating flakes. Ours polishes back." } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "Authenticity",
+        "heading": "How to tell it is real silver",
+        "body": "<p>Every Zevaraz piece is stamped 925 and carries a BIS hallmark. Not plated, not sterling-look, not 'silver finish'. If a piece is not hallmarked, it does not leave our Jaipur workshop.</p>",
+        "purity": "92.5",
+        "medallion_label": "Hallmarked",
+        "cta_label": "Read the guarantee",
+        "cta_link": "/pages/authenticity-gurantee"
+      }
+    },
+    "new_in": {
+      "type": "zev-product-row",
+      "settings": {
+        "eyebrow": "New in · Ratna",
+        "heading": "Silver meets colour",
+        "collection": "jyoti-subtle-sparkle-copy",
+        "link_label": "Shop Ratna",
+        "count": 4,
+        "density": "full",
+        "quick_add": false
+      }
+    },
+    "baby": {
+      "type": "zev-image-band",
+      "settings": {
+        "image_side": "left",
+        "scheme": "stone",
+        "eyebrow": "Baby & Kids",
+        "heading": "Her first silver, and the one she keeps",
+        "body": "<p>Kada, pendants and anklets in the same hallmarked 92.5 silver — nickel-free, smooth-edged, and sized for small wrists. A rite, not an accessory.</p>",
+        "link_label": "Shop baby & kids",
+        "link_url": "/collections/baby-kada"
+      }
+    },
+    "instagram": {
+      "type": "zev-instagram",
+      "blocks": {
+        "i1": { "type": "post", "settings": {} },
+        "i2": { "type": "post", "settings": {} },
+        "i3": { "type": "post", "settings": {} },
+        "i4": { "type": "post", "settings": {} },
+        "i5": { "type": "post", "settings": {} }
+      },
+      "block_order": ["i1", "i2", "i3", "i4", "i5"],
+      "settings": {
+        "heading": "Worn in real light",
+        "handle": "@zevaraz.silver",
+        "handle_url": "https://www.instagram.com/zevaraz.silver"
       }
     }
   },
-  "order": [
-    "176987452385ada2da",
-    "17698732491905c57b",
-    "image_banner_kkREH4",
-    "featured_collection",
-    "featured_collection_6eAGnR",
-    "multicolumn_yTLQMg"
-  ]
+  "order": ["hero", "trust", "navigator", "hallmark", "new_in", "baby", "instagram"]
 }

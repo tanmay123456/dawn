@@ -15,30 +15,40 @@
       "type": "zev-head",
       "settings": {}
     },
-    "announcement_bar_fnUMJT": {
-      "type": "announcement-bar",
+    "zev_announcement": {
+      "type": "zev-announcement",
       "blocks": {
-        "announcement_AgFqzP": {
-          "type": "announcement",
+        "claim_hallmark": {
+          "type": "claim",
           "settings": {
-            "text": "Free Shipping on All Orders",
-            "link": ""
+            "text": "92.5 Hallmarked Sterling Silver",
+            "emphasis": "silver",
+            "hide_mobile": false
+          }
+        },
+        "claim_shipping": {
+          "type": "claim",
+          "settings": {
+            "text": "Free shipping on all orders",
+            "emphasis": "ivory",
+            "hide_mobile": false
+          }
+        },
+        "claim_jaipur": {
+          "type": "claim",
+          "settings": {
+            "text": "Direct from Jaipur",
+            "emphasis": "silver",
+            "hide_mobile": true
           }
         }
       },
       "block_order": [
-        "announcement_AgFqzP"
+        "claim_hallmark",
+        "claim_shipping",
+        "claim_jaipur"
       ],
-      "name": "t:sections.announcement-bar.presets.name",
-      "settings": {
-        "auto_rotate": true,
-        "change_slides_speed": 5,
-        "color_scheme": "scheme-3",
-        "show_line_separator": true,
-        "show_social": false,
-        "enable_country_selector": false,
-        "enable_language_selector": false
-      }
+      "settings": {}
     },
     "header": {
       "type": "header",
@@ -53,16 +63,16 @@
         "color_scheme": "scheme-1",
         "menu_color_scheme": "scheme-1",
         "enable_country_selector": false,
-        "enable_language_selector": true,
+        "enable_language_selector": false,
         "margin_bottom": 0,
-        "padding_top": 8,
-        "padding_bottom": 16
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     }
   },
   "order": [
     "zev_head",
-    "announcement_bar_fnUMJT",
+    "zev_announcement",
     "header"
   ]
 }
