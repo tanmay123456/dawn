@@ -43,7 +43,12 @@
           }
         }
       },
-      "block_order": ["brand", "collections", "help", "talk"],
+      "block_order": [
+        "brand",
+        "collections",
+        "help",
+        "talk"
+      ],
       "settings": {
         "color_scheme": "scheme-3",
         "newsletter_enable": true,
@@ -60,5 +65,7 @@
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
