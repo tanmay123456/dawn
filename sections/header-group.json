@@ -28,6 +28,7 @@
         },
         "claim_hallmark": {
           "type": "claim",
+          "disabled": true,
           "settings": {
             "text": "92.5 Hallmarked Sterling Silver",
             "emphasis": "silver",
