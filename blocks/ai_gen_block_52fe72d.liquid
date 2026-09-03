@@ -1,0 +1,514 @@
+{% doc %}
+  @prompt
+    Create a fullscreen slideshow section with no navigation elements. Features needed:
+    - Fullscreen edge-to-edge images with no side borders or margins
+    - No navigation dots, counter, or numbers visible
+    - Auto-play slideshow functionality
+    - Smooth transitions between slides
+    - Mobile-responsive design
+    - Settings to add multiple slides with images
+    - Option to adjust slide duration, transition speed, image size 
+    - Clean minimal design with no visible controls, and option for adjusting the image height and layout both for mobie and desktop view, add a section for custom CSS, if i want to add any thing in the future. Also can a toggle for CTA button 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-fullscreen-slideshow-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-fullscreen-slideshow-{{ ai_gen_id }} {
+      height: {{ block.settings.desktop_height }}vh;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-fullscreen-slideshow-{{ ai_gen_id }} {
+      height: {{ block.settings.mobile_height }}vh;
+    }
+  }
+
+  .ai-fullscreen-slideshow__container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-fullscreen-slideshow__slide-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity {{ block.settings.transition_speed }}s ease-in-out;
+  }
+
+  .ai-fullscreen-slideshow__slide-{{ ai_gen_id }}.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .ai-fullscreen-slideshow__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-position: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ai-fullscreen-slideshow__image-{{ ai_gen_id }} {
+      object-fit: {{ block.settings.desktop_image_fit }};
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-fullscreen-slideshow__image-{{ ai_gen_id }} {
+      object-fit: {{ block.settings.mobile_image_fit }};
+    }
+  }
+
+  .ai-fullscreen-slideshow__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-fullscreen-slideshow__placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 600px;
+  }
+
+  .ai-fullscreen-slideshow__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px 24px;
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+  }
+
+  .ai-fullscreen-slideshow__content-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+  }
+
+  .ai-fullscreen-slideshow__cta-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border_color }};
+  }
+
+  .ai-fullscreen-slideshow__cta-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background_color }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
+
+  {{ block.settings.custom_css }}
+{% endstyle %}
+
+<fullscreen-slideshow-{{ ai_gen_id }}
+  class="ai-fullscreen-slideshow-{{ ai_gen_id }}"
+  data-autoplay="{{ block.settings.autoplay }}"
+  data-duration="{{ block.settings.slide_duration }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-fullscreen-slideshow__container-{{ ai_gen_id }}">
+    {% liquid
+      assign has_any_image = false
+      for i in (1..5)
+        assign image_key = 'slide_' | append: i | append: '_image'
+        if block.settings[image_key] != blank
+          assign has_any_image = true
+          break
+        endif
+      endfor
+    %}
+
+    {% for i in (1..5) %}
+      {% liquid
+        assign image_key = 'slide_' | append: i | append: '_image'
+        assign image = block.settings[image_key]
+      %}
+
+      {% if image != blank %}
+        <div class="ai-fullscreen-slideshow__slide-{{ ai_gen_id }} {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index }}">
+          <img
+            src="{{ image | image_url: width: 3000 }}"
+            alt="{{ image.alt | escape }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            width="{{ image.width }}"
+            height="{{ image.height }}"
+            class="ai-fullscreen-slideshow__image-{{ ai_gen_id }}"
+          >
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% unless has_any_image %}
+      <div class="ai-fullscreen-slideshow__slide-{{ ai_gen_id }} active" data-slide="1">
+        <div class="ai-fullscreen-slideshow__placeholder-{{ ai_gen_id }}">
+          {{ 'hero-apparel-1' | placeholder_svg_tag }}
+          <div class="ai-fullscreen-slideshow__empty-state-{{ ai_gen_id }}">
+            Add images to create your fullscreen slideshow
+          </div>
+        </div>
+      </div>
+    {% endunless %}
+
+    {% if block.settings.show_cta_button and block.settings.button_text != blank %}
+      <div class="ai-fullscreen-slideshow__content-{{ ai_gen_id }}">
+        <a href="{{ block.settings.button_link }}" class="ai-fullscreen-slideshow__cta-{{ ai_gen_id }}">
+          {{ block.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</fullscreen-slideshow-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FullscreenSlideshow{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentSlide = 0;
+        this.slides = [];
+        this.autoplayInterval = null;
+      }
+
+      connectedCallback() {
+        this.slides = Array.from(this.querySelectorAll('.ai-fullscreen-slideshow__slide-{{ ai_gen_id }}'));
+        
+        if (this.slides.length <= 1) {
+          return;
+        }
+
+        const autoplay = this.dataset.autoplay === 'true';
+        const duration = parseInt(this.dataset.duration) * 1000;
+
+        if (autoplay && duration > 0) {
+          this.startAutoplay(duration);
+        }
+      }
+
+      startAutoplay(duration) {
+        this.autoplayInterval = setInterval(() => {
+          this.nextSlide();
+        }, duration);
+      }
+
+      nextSlide() {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.slides[this.currentSlide].classList.add('active');
+      }
+
+      disconnectedCallback() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+        }
+      }
+    }
+
+    customElements.define('fullscreen-slideshow-{{ ai_gen_id }}', FullscreenSlideshow{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fullscreen slideshow",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "fill",
+          "label": "Fill"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        },
+        {
+          "value": "fill",
+          "label": "Fill"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "header",
+      "content": "Slideshow settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "slide_duration",
+      "label": "Slide duration",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "label": "Transition speed",
+      "min": 0.5,
+      "max": 2,
+      "step": 0.5,
+      "unit": "s",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Call to action button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_button",
+      "label": "Show CTA button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Background color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Hover background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Slide 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Slide 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Slide 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Slide 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Slide 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "slide_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Custom CSS"
+    },
+    {
+      "type": "html",
+      "id": "custom_css",
+      "label": "Custom CSS",
+      "info": "Add custom CSS styles here. No <style> tags needed."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fullscreen slideshow"
+    }
+  ]
+}
+{% endschema %}
