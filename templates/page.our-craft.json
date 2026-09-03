@@ -115,7 +115,7 @@
     "closing": {
       "type": "zev-statement",
       "settings": {
-        "scheme": "graphite",
+        "scheme": "ivory",
         "size": "closing",
         "eyebrow": "Brand truth",
         "heading": "Indian heritage. Modern minimal. Real silver.",
