@@ -1,0 +1,85 @@
+{%- comment -%}
+  Zevaraz — Three pillars (brand story). Stone, divided by hairlines.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+{%- liquid
+  assign filled = 0
+  for block in section.blocks
+    if block.settings.title != blank
+      assign filled = filled | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if filled > 0 -%}
+  <div class="zev-pillars">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.title != blank -%}
+        <div class="zev-pillars__item" {{ block.shopify_attributes }}>
+          <h3 class="zev-pillars__title">{{ block.settings.title }}</h3>
+          {%- if block.settings.body != blank -%}
+            <div class="zev-pillars__body">{{ block.settings.body }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{%- style -%}
+  .zev-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: var(--zev-stone, #F1EEE8);
+  }
+  .zev-pillars__item {
+    padding: 64px 44px;
+    border-right: 1px solid var(--zev-line-stone, #E0DCD4);
+  }
+  .zev-pillars__item:last-child { border-right: 0; }
+  .zev-pillars__title {
+    margin: 0 0 14px;
+    font: 600 30px/1.2 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-pillars__body {
+    font: 400 15px/1.7 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-body-soft, #5A5654);
+  }
+  .zev-pillars__body p { margin: 0; }
+  @media (max-width: 989px) {
+    .zev-pillars { grid-template-columns: 1fr; }
+    .zev-pillars__item {
+      border-right: 0;
+      border-bottom: 1px solid var(--zev-line-stone, #E0DCD4);
+      padding: 32px var(--zev-gutter, 20px);
+    }
+    .zev-pillars__item:last-child { border-bottom: 0; }
+    .zev-pillars__title { font-size: 24px; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Three pillars",
+  "tag": "section",
+  "class": "zev-pillars-section",
+  "max_blocks": 3,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        { "id": "title", "type": "text", "label": "Title" },
+        { "id": "body", "type": "richtext", "label": "Body" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Three pillars", "blocks": [{ "type": "pillar" }, { "type": "pillar" }, { "type": "pillar" }] }
+  ]
+}
+{% endschema %}

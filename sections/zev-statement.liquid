@@ -1,0 +1,120 @@
+{%- comment -%}
+  Zevaraz — Statement (brand story opening and closing)
+  Centred, one idea, nothing else on the screen fighting it.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+<div class="zev-statement zev-statement--{{ section.settings.scheme }} zev-statement--{{ section.settings.size }}">
+  {%- if section.settings.eyebrow != blank -%}
+    <p class="zev-statement__eyebrow">{{ section.settings.eyebrow }}</p>
+  {%- endif -%}
+  {%- if section.settings.heading != blank -%}
+    <h2 class="zev-statement__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  {%- if section.settings.body != blank -%}
+    <div class="zev-statement__body">{{ section.settings.body }}</div>
+  {%- endif -%}
+  {%- if section.settings.cta_label != blank -%}
+    <a class="zev-statement__cta" href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_label }}</a>
+  {%- endif -%}
+</div>
+
+{%- style -%}
+  .zev-statement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 110px var(--zev-gutter, 56px) 90px;
+    text-align: center;
+  }
+  .zev-statement--ivory    { background: var(--zev-ivory, #F8F8F6); }
+  .zev-statement--stone    { background: var(--zev-stone, #F1EEE8); }
+  .zev-statement--graphite { background: var(--zev-graphite, #1C1C1C); }
+  .zev-statement--closing  { padding: 80px var(--zev-gutter, 56px); }
+
+  .zev-statement__eyebrow {
+    margin: 0;
+    font: 500 11px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--zev-emerald, #0F6452);
+  }
+  .zev-statement__heading {
+    margin: 0;
+    font: 600 58px/1.1 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-ink, #1C1C1C);
+    text-wrap: balance;
+  }
+  .zev-statement--closing .zev-statement__heading { font-size: 44px; }
+  .zev-statement__body {
+    max-width: 640px;
+    font: 400 17px/1.75 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-body-soft, #5A5654);
+  }
+  .zev-statement__body p { margin: 0 0 12px; }
+  .zev-statement__body p:last-child { margin-bottom: 0; }
+  .zev-statement__cta {
+    margin-top: 4px;
+    padding: 17px 34px;
+    background: var(--zev-emerald, #0F6452);
+    color: #fff;
+    font: 500 14px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    min-height: 44px;
+  }
+  .zev-statement__cta:hover { background: var(--zev-emerald-hover, #0C5343); }
+
+  .zev-statement--graphite .zev-statement__heading { color: var(--zev-on-dark, #F8F8F6); }
+  .zev-statement--graphite .zev-statement__body { color: var(--zev-on-dark-soft, #D8D4CC); }
+  .zev-statement--graphite .zev-statement__eyebrow { color: var(--zev-silver, #C0C0C0); }
+
+  @media (max-width: 749px) {
+    .zev-statement { padding: 48px var(--zev-gutter, 20px) 40px; gap: 16px; }
+    .zev-statement__heading { font-size: 32px; }
+    .zev-statement--closing .zev-statement__heading { font-size: 28px; }
+    .zev-statement__body { font-size: 15px; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Statement",
+  "tag": "section",
+  "class": "zev-statement-section",
+  "settings": [
+    {
+      "id": "scheme",
+      "type": "select",
+      "label": "Colour scheme",
+      "options": [
+        { "value": "ivory", "label": "Ivory" },
+        { "value": "stone", "label": "Stone" },
+        { "value": "graphite", "label": "Graphite" }
+      ],
+      "default": "ivory"
+    },
+    {
+      "id": "size",
+      "type": "select",
+      "label": "Size",
+      "options": [
+        { "value": "opening", "label": "Opening — large" },
+        { "value": "closing", "label": "Closing — compact" }
+      ],
+      "default": "opening"
+    },
+    { "id": "eyebrow", "type": "text", "label": "Eyebrow" },
+    { "id": "heading", "type": "text", "label": "Heading" },
+    { "id": "body", "type": "richtext", "label": "Body" },
+    { "id": "cta_label", "type": "text", "label": "Button label" },
+    { "id": "cta_link", "type": "url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Statement" }]
+}
+{% endschema %}
