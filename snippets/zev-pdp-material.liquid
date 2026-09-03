@@ -1,0 +1,16 @@
+{%- comment -%}
+  Buy box item 3 — the material line, e.g.
+  "Labradorite in 92.5 hallmarked sterling silver".
+  Built from custom.stone + custom.metal_purity. Either half may be missing;
+  the line renders only if at least the purity is set.
+{%- endcomment -%}
+{%- liquid
+  assign stone = product.metafields.custom.stone.value
+  assign purity = product.metafields.custom.metal_purity.value
+-%}
+{%- if purity != blank -%}
+  <p class="zev-pdp__material">
+    {%- if stone != blank -%}{{ stone }} in {% endif -%}
+    {{ purity }}
+  </p>
+{%- endif -%}

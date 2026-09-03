@@ -1,0 +1,60 @@
+{%- comment -%}
+  Buy box items 8 and 9 — quantity stepper and Add to cart on one row, then
+  Buy it now full width beneath. Kept as one block so the row cannot break
+  apart the way two separate theme blocks do.
+
+  Uses Dawn's own <product-form> element, so AJAX add-to-cart and the cart
+  drawer behave exactly as the theme expects.
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign form_id = 'zev-product-form-' | append: section.id
+-%}
+
+<product-form class="zev-buy" data-hide-errors="false">
+  {%- form 'product', product, id: form_id, class: 'zev-buy__form', novalidate: 'novalidate' -%}
+    <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+
+    <div class="zev-buy__row">
+      <quantity-input class="zev-qty">
+        <button class="zev-qty__btn" name="minus" type="button">
+          <span class="visually-hidden">Decrease quantity</span>−
+        </button>
+        <input
+          class="zev-qty__input"
+          type="number"
+          name="quantity"
+          id="Quantity-{{ section.id }}"
+          value="1"
+          min="1"
+          step="1"
+          aria-label="Quantity"
+        >
+        <button class="zev-qty__btn" name="plus" type="button">
+          <span class="visually-hidden">Increase quantity</span>+
+        </button>
+      </quantity-input>
+
+      <button
+        type="submit"
+        name="add"
+        class="zev-buy__add"
+        {% if variant.available == false %}disabled{% endif %}
+      >
+        <span>{% if variant.available %}Add to cart{% else %}Sold out{% endif %}</span>
+        <div class="loading__spinner hidden">
+          {{ 'loading-spinner.svg' | inline_asset_content }}
+        </div>
+      </button>
+    </div>
+
+    {%- if variant.available -%}
+      <div class="zev-buy__dynamic">{{ form | payment_button }}</div>
+    {%- endif -%}
+
+    <div class="product-form__error-message-wrapper" role="alert" hidden>
+      <span class="product-form__error-message"></span>
+    </div>
+  {%- endform -%}
+</product-form>

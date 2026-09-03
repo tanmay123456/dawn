@@ -1,0 +1,8 @@
+{%- comment -%}
+  Buy box item 1 — collection eyebrow, e.g. "Collection 04 · Ratna".
+  Source: product metafield custom.collection_name. Renders nothing if empty.
+{%- endcomment -%}
+{%- assign zev_eyebrow = product.metafields.custom.collection_name.value -%}
+{%- if zev_eyebrow != blank -%}
+  <p class="zev-pdp__eyebrow">{{ zev_eyebrow }}</p>
+{%- endif -%}

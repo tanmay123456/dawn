@@ -1,0 +1,66 @@
+{%- comment -%}
+  Buy box item 11 — four accordion rows, all metafield-driven.
+  A row with no content does not render. No empty rows, ever.
+
+    Materials & weight     custom.metal_purity + custom.gross_weight
+    Size & fit             custom.size_fit          (rich text)
+    Shipping & returns     shop policies + page setting
+    How to care for silver custom.care              (rich text)
+{%- endcomment -%}
+
+{%- liquid
+  assign purity = product.metafields.custom.metal_purity.value
+  assign weight = product.metafields.custom.gross_weight.value
+  assign size_fit = product.metafields.custom.size_fit.value
+  assign care = product.metafields.custom.care.value
+
+  capture materials
+    if purity != blank
+      echo '<p>' | append: purity | append: '</p>'
+    endif
+    if weight != blank and weight > 0
+      echo '<p>Gross weight ' | append: weight | append: ' g</p>'
+    endif
+  endcapture
+
+  capture shipping
+    if shop.shipping_policy.body != blank
+      echo shop.shipping_policy.body
+    endif
+    if shop.refund_policy.body != blank
+      echo shop.refund_policy.body
+    endif
+  endcapture
+-%}
+
+{%- if materials != blank or size_fit != blank or shipping != blank or care != blank -%}
+  <div class="zev-acc">
+    {%- if materials != blank -%}
+      <details class="zev-acc__row">
+        <summary class="zev-acc__label">Materials &amp; weight<span class="zev-acc__mark" aria-hidden="true">+</span></summary>
+        <div class="zev-acc__body">{{ materials }}</div>
+      </details>
+    {%- endif -%}
+
+    {%- if size_fit != blank -%}
+      <details class="zev-acc__row">
+        <summary class="zev-acc__label">Size &amp; fit<span class="zev-acc__mark" aria-hidden="true">+</span></summary>
+        <div class="zev-acc__body">{{ size_fit }}</div>
+      </details>
+    {%- endif -%}
+
+    {%- if shipping != blank -%}
+      <details class="zev-acc__row">
+        <summary class="zev-acc__label">Shipping &amp; returns<span class="zev-acc__mark" aria-hidden="true">+</span></summary>
+        <div class="zev-acc__body">{{ shipping }}</div>
+      </details>
+    {%- endif -%}
+
+    {%- if care != blank -%}
+      <details class="zev-acc__row">
+        <summary class="zev-acc__label">How to care for silver<span class="zev-acc__mark" aria-hidden="true">+</span></summary>
+        <div class="zev-acc__body">{{ care }}</div>
+      </details>
+    {%- endif -%}
+  </div>
+{%- endif -%}

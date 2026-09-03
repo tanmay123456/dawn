@@ -1,0 +1,14 @@
+{%- comment -%}
+  Buy box item 10 — the WhatsApp line, with this product prefilled in the
+  message so the reply does not start with "which piece?".
+  Number lives in one place: change it here and on the footer block.
+{%- endcomment -%}
+{%- assign zev_wa_number = '919461234296' -%}
+{%- capture zev_wa_message -%}
+Hi Zevaraz, I have a question about {{ product.title }} — {{ shop.url }}{{ product.url }}
+{%- endcapture -%}
+<p class="zev-pdp__whatsapp">
+  <a href="https://wa.me/{{ zev_wa_number }}?text={{ zev_wa_message | strip | url_encode }}" target="_blank" rel="noopener">
+    Or ask us on WhatsApp before you buy
+  </a>
+</p>
