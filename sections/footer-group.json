@@ -25,7 +25,7 @@
           "type": "text",
           "settings": {
             "heading": "Collections",
-            "subtext": "<p><a href=\"/collections/aabha-kundan-silver-rings\">Aabha · Heritage</a><br/><a href=\"/collections/rekha-silver-bracelets\">Nira · Everyday</a><br/><a href=\"/collections/kala-oxidised-silver\">Kala · Oxidised</a><br/><a href=\"/collections/jyoti-subtle-sparkle-copy\">Ratna · Gemstone</a></p>"
+            "subtext": "<p><a href=\"/collections/aabha\" title=\"Aabha\">Aabha · Heritage</a><br/><a href=\"/collections/nira\" title=\"Nira\">Nira · Everyday</a><br/><a href=\"/collections/kala\" title=\"Kala\">Kala · Oxidised</a><br/><a href=\"/collections/ratna\" title=\"Ratna\">Ratna · Gemstone</a></p>"
           }
         },
         "help": {
