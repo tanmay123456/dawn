@@ -1,0 +1,232 @@
+{%- comment -%}
+  Zevaraz — Hallmark band (homepage section 1.6)
+  Graphite scheme. The single most important trust section in the redesign.
+  Left: heading, body, up to three proof points, CTA.
+  Right: image at 50% opacity behind the 92.5 medallion.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+<div class="zev-hallmark">
+  <div class="zev-hallmark__copy">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="zev-hallmark__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="zev-hallmark__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.body != blank -%}
+      <div class="zev-hallmark__body">{{ section.settings.body }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="zev-hallmark__proof">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.title != blank -%}
+            <div class="zev-hallmark__proof-item" {{ block.shopify_attributes }}>
+              <p class="zev-hallmark__proof-title">{{ block.settings.title }}</p>
+              {%- if block.settings.note != blank -%}
+                <p class="zev-hallmark__proof-note">{{ block.settings.note }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+      <a class="zev-hallmark__cta" href="{{ section.settings.cta_link }}">
+        {{ section.settings.cta_label }}
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="zev-hallmark__visual">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image
+         | image_url: width: 1400
+         | image_tag:
+             loading: 'lazy',
+             sizes: '(min-width: 990px) 50vw, 100vw',
+             widths: '600,900,1400',
+             class: 'zev-hallmark__image',
+             alt: section.settings.image.alt | default: 'Hallmark detail' }}
+    {%- endif -%}
+
+    <div class="zev-hallmark__medallion">
+      <span class="zev-hallmark__purity">{{ section.settings.purity | default: '92.5' }}</span>
+      <span class="zev-hallmark__stamp">{{ section.settings.medallion_label | default: 'Hallmarked' }}</span>
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+  .zev-hallmark {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    background: var(--zev-graphite, #1C1C1C);
+    color: var(--zev-on-dark, #F8F8F6);
+  }
+  .zev-hallmark__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 88px 72px;
+  }
+  .zev-hallmark__eyebrow {
+    margin: 0;
+    font: 500 11px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--zev-silver, #C0C0C0);
+  }
+  .zev-hallmark__heading {
+    margin: 0;
+    font: 600 42px/1.14 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-on-dark, #F8F8F6);
+    text-wrap: pretty;
+  }
+  .zev-hallmark__body {
+    max-width: 520px;
+    font: 400 16px/1.7 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-on-dark-soft, #D8D4CC);
+    text-wrap: pretty;
+  }
+  .zev-hallmark__body p { margin: 0; }
+  .zev-hallmark__proof {
+    display: flex;
+    gap: 36px;
+    padding-top: 14px;
+  }
+  .zev-hallmark__proof-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    max-width: 170px;
+  }
+  .zev-hallmark__proof-title {
+    margin: 0;
+    font: 600 15px/1.3 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-on-dark, #F8F8F6);
+  }
+  .zev-hallmark__proof-note {
+    margin: 0;
+    font: 400 12px/1.55 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-hallmark__cta {
+    align-self: flex-start;
+    margin-top: 16px;
+    padding: 16px 30px;
+    background: var(--zev-emerald, #0F6452);
+    color: #fff;
+    font: 500 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color .15s ease;
+  }
+  .zev-hallmark__cta:hover { background: var(--zev-emerald-hover, #0C5343); }
+
+  .zev-hallmark__visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--zev-graphite-alt, #141414);
+    overflow: hidden;
+  }
+  .zev-hallmark__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .5;
+  }
+  .zev-hallmark__medallion {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 230px;
+    height: 230px;
+    border: 1px solid rgba(192, 192, 192, .55);
+    border-radius: 50%;
+  }
+  .zev-hallmark__purity {
+    font: 600 68px/1 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-emerald, #0F6452);
+    background: var(--zev-ivory, #F8F8F6);
+    padding: 0 14px;
+  }
+  .zev-hallmark__stamp {
+    font: 500 11px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--zev-silver, #C0C0C0);
+  }
+
+  @media (max-width: 989px) {
+    .zev-hallmark { grid-template-columns: 1fr; }
+    .zev-hallmark__copy {
+      padding: 44px 22px;
+      gap: 18px;
+      order: 2;
+    }
+    .zev-hallmark__heading { font-size: 27px; line-height: 1.18; }
+    .zev-hallmark__body { font-size: 14px; }
+    .zev-hallmark__proof { flex-direction: column; gap: 18px; }
+    .zev-hallmark__visual {
+      order: 1;
+      min-height: 240px;
+      padding: 40px 0;
+    }
+    .zev-hallmark__medallion { width: 120px; height: 120px; gap: 4px; }
+    .zev-hallmark__purity { font-size: 36px; padding: 0 8px; }
+    .zev-hallmark__stamp { font-size: 9px; letter-spacing: .22em; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Hallmark band",
+  "tag": "section",
+  "class": "zev-hallmark-section",
+  "max_blocks": 3,
+  "settings": [
+    { "id": "eyebrow", "type": "text", "label": "Eyebrow", "default": "Authenticity" },
+    { "id": "heading", "type": "text", "label": "Heading", "default": "How to tell it is real silver" },
+    { "id": "body", "type": "richtext", "label": "Body" },
+    { "id": "image", "type": "image_picker", "label": "Background image", "info": "Sits at 50% opacity behind the medallion. A macro or workshop shot works best." },
+    { "id": "purity", "type": "text", "label": "Medallion numeral", "default": "92.5" },
+    { "id": "medallion_label", "type": "text", "label": "Medallion label", "default": "Hallmarked" },
+    { "id": "cta_label", "type": "text", "label": "Button label", "default": "Read the guarantee" },
+    { "id": "cta_link", "type": "url", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "proof",
+      "name": "Proof point",
+      "settings": [
+        { "id": "title", "type": "text", "label": "Title" },
+        { "id": "note", "type": "text", "label": "Supporting line" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hallmark band",
+      "blocks": [
+        { "type": "proof", "settings": { "title": "Look for the 925 stamp", "note": "Inside the band or on the clasp, laser-marked." } },
+        { "type": "proof", "settings": { "title": "BIS hallmark triangle", "note": "The mark of the Bureau of Indian Standards." } },
+        { "type": "proof", "settings": { "title": "It tarnishes, gently", "note": "Real silver ages. Plating flakes. Ours polishes back." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
