@@ -3635,3 +3635,11 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+.card__heading,
+.card__heading a,
+.card-information__text {
+  white-space: normal !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  writing-mode: horizontal-tb !important;
+}
