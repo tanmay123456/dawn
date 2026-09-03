@@ -11,6 +11,10 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
+    "zev_head": {
+      "type": "zev-head",
+      "settings": {}
+    },
     "announcement_bar_fnUMJT": {
       "type": "announcement-bar",
       "blocks": {
@@ -46,8 +50,8 @@
         "menu_type_desktop": "dropdown",
         "sticky_header_type": "always",
         "show_line_separator": true,
-        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
-        "menu_color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
         "enable_country_selector": false,
         "enable_language_selector": true,
         "margin_bottom": 0,
@@ -57,6 +61,7 @@
     }
   },
   "order": [
+    "zev_head",
     "announcement_bar_fnUMJT",
     "header"
   ]
