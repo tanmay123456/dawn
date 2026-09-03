@@ -1,23 +1,28 @@
 /* Zevaraz — Dawn 16 compatibility layer, plus a few section corrections.
-   zev-tokens.css was authored against an older Dawn. Dawn 16 restructured the
-   product card: .card-information is now nested inside .card__information,
-   below the heading, rather than being the card's own meta row. These rules
-   restore the two details that depend on it — the title/price row and the
-   925 chip. Loaded immediately after zev-tokens.css. */
+   zev-tokens.css was authored against an older Dawn. Two things changed:
+
+   1. .card-information is now nested inside .card__information, below the
+      heading, rather than being the card's own meta row. Dawn also renders two
+      .card__content blocks and hides the one inside .card__inner, so the meta
+      row has to be addressed as .card > .card__content > .card__information.
+   2. Dawn 16 uses .card__inner::after itself, for the card's border layer.
+      The 925 chip therefore hangs off .card__media::after instead.
+
+   Loaded immediately after zev-tokens.css. */
 
 /* Meta row: title on the left, subtitle and price on the right, baselines aligned. */
-.card-wrapper .card__content > .card__information {
+.card-wrapper .card > .card__content > .card__information {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 14px;
   padding: var(--zev-card-pad, 22px);
 }
-.card-wrapper .card__content > .card__information > .card__heading {
+.card-wrapper .card > .card__content > .card__information > .card__heading {
   margin: 0;
   flex: 1 1 auto;
 }
-.card-wrapper .card__content > .card__information > .card-information {
+.card-wrapper .card > .card__content > .card__information > .card-information {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -30,8 +35,7 @@
 .card-wrapper .card-information .caption-large:empty { display: none; }
 
 /* The 925 chip sits on the image, bottom right. */
-.card-wrapper .card__inner { position: relative; }
-.card-wrapper .card__inner::after {
+.card-wrapper .card__media::after {
   content: '925 · BIS';
   position: absolute;
   right: 14px;
@@ -63,8 +67,8 @@
 .zev-chead:not(:has(.zev-chead__media)) { grid-template-columns: 1fr; }
 
 @media (max-width: 749px) {
-  .card-wrapper .card__content > .card__information { padding: 14px; gap: 10px; }
-  .card-wrapper .card__inner::after {
+  .card-wrapper .card > .card__content > .card__information { padding: 14px; gap: 10px; }
+  .card-wrapper .card__media::after {
     right: 8px;
     bottom: 8px;
     padding: 5px 8px;
