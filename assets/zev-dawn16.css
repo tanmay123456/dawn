@@ -1,4 +1,4 @@
-/* Zevaraz — Dawn 16 compatibility layer.
+/* Zevaraz — Dawn 16 compatibility layer, plus a few section corrections.
    zev-tokens.css was authored against an older Dawn. Dawn 16 restructured the
    product card: .card-information is now nested inside .card__information,
    below the heading, rather than being the card's own meta row. These rules
@@ -58,6 +58,10 @@
   color: var(--zev-taupe, #A8999C);
 }
 
+/* Collection header: when the collection has no image, the copy takes the
+   full width rather than leaving an empty right half. */
+.zev-chead:not(:has(.zev-chead__media)) { grid-template-columns: 1fr; }
+
 @media (max-width: 749px) {
   .card-wrapper .card__content > .card__information { padding: 14px; gap: 10px; }
   .card-wrapper .card__inner::after {
@@ -66,4 +70,13 @@
     padding: 5px 8px;
     font-size: 9px;
   }
+
+  /* The two remaining claims have to hold one line at 375px. */
+  .zev-ann__row {
+    flex-wrap: nowrap;
+    font-size: 9px;
+    letter-spacing: .06em;
+    gap: 6px;
+  }
+  .zev-ann__item { white-space: nowrap; }
 }
