@@ -18,6 +18,14 @@
     "zev_announcement": {
       "type": "zev-announcement",
       "blocks": {
+        "claim_iXrhmi": {
+          "type": "claim",
+          "settings": {
+            "text": "Free shipping on all orders·",
+            "emphasis": "silver",
+            "hide_mobile": false
+          }
+        },
         "claim_hallmark": {
           "type": "claim",
           "settings": {
@@ -25,19 +33,11 @@
             "emphasis": "silver",
             "hide_mobile": false
           }
-        },
-        "claim_jaipur": {
-          "type": "claim",
-          "settings": {
-            "text": "Direct from Jaipur",
-            "emphasis": "silver",
-            "hide_mobile": true
-          }
         }
       },
       "block_order": [
-        "claim_hallmark",
-        "claim_jaipur"
+        "claim_iXrhmi",
+        "claim_hallmark"
       ],
       "settings": {}
     },
