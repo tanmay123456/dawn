@@ -1,0 +1,364 @@
+{% doc %}
+  @prompt
+    Create a collection list carousel section with the following features:
+    - Horizontal scrolling carousel layout with no navigation arrows
+    - Support for 9 or more collection items in an endless scrollable list
+    - Circular images for each collection item
+    - Text overlay on the images with adjustable font size setting
+    - Mobile-optimized carousel that scrolls smoothly horizontally
+    - Color scheme selector option for the section background and text
+    - Minimal spacing between items for an edge-to-edge appearance
+    - No visible scrollbar, smooth touch/swipe scrolling on mobile
+    - Grid layout that displays multiple items at once (3-4 visible on mobile)
+    - Settings to adjust image size and text size independently
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-carousel-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    padding: 40px 0;
+  }
+
+  .ai-collection-carousel-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .ai-collection-carousel-track-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.item_spacing }}px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 20px;
+  }
+
+  .ai-collection-carousel-track-{{ ai_gen_id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-collection-carousel-item-{{ ai_gen_id }} {
+    flex: 0 0 auto;
+    width: {{ block.settings.image_size }}px;
+    position: relative;
+  }
+
+  .ai-collection-carousel-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: {{ block.settings.image_size }}px;
+    height: {{ block.settings.image_size }}px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .ai-collection-carousel-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-collection-carousel-image-wrapper-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-collection-carousel-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+  }
+
+  .ai-collection-carousel-title-{{ ai_gen_id }} {
+    color: #ffffff;
+    font-size: {{ block.settings.text_size }}px;
+    font-weight: 600;
+    text-align: center;
+    padding: 0 15px;
+    margin: 0;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+
+  .ai-collection-carousel-link-{{ ai_gen_id }} {
+    text-decoration: none;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-carousel-item-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_image_size }}px;
+    }
+
+    .ai-collection-carousel-image-wrapper-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_image_size }}px;
+      height: {{ block.settings.mobile_image_size }}px;
+    }
+
+    .ai-collection-carousel-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_text_size }}px;
+    }
+
+    .ai-collection-carousel-{{ ai_gen_id }} {
+      padding: 20px 0;
+    }
+  }
+
+  .color-scheme-{{ ai_gen_id }} {
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+{% endstyle %}
+
+<collection-carousel-{{ ai_gen_id }}
+  class="ai-collection-carousel-{{ ai_gen_id }} color-{{ block.settings.color_scheme }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-collection-carousel-wrapper-{{ ai_gen_id }}">
+    <div class="ai-collection-carousel-track-{{ ai_gen_id }}">
+      {% for i in (1..12) %}
+        {% liquid
+          assign collection_key = 'collection_' | append: i
+          assign collection = block.settings[collection_key]
+        %}
+
+        {% if collection != blank %}
+          <div class="ai-collection-carousel-item-{{ ai_gen_id }}">
+            <a href="{{ collection.url }}" class="ai-collection-carousel-link-{{ ai_gen_id }}">
+              <div class="ai-collection-carousel-image-wrapper-{{ ai_gen_id }}">
+                {% if collection.featured_image %}
+                  <img
+                    src="{{ collection.featured_image | image_url: width: 400 }}"
+                    alt="{{ collection.title | escape }}"
+                    class="ai-collection-carousel-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  >
+                {% else %}
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                {% endif %}
+                <div class="ai-collection-carousel-overlay-{{ ai_gen_id }}">
+                  <h3 class="ai-collection-carousel-title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</collection-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollectionCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.track = this.querySelector('.ai-collection-carousel-track-{{ ai_gen_id }}');
+        this.setupTouchScroll();
+      }
+
+      setupTouchScroll() {
+        if (!this.track) return;
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        this.track.addEventListener('mousedown', (e) => {
+          isDown = true;
+          this.track.style.cursor = 'grabbing';
+          startX = e.pageX - this.track.offsetLeft;
+          scrollLeft = this.track.scrollLeft;
+        });
+
+        this.track.addEventListener('mouseleave', () => {
+          isDown = false;
+          this.track.style.cursor = 'grab';
+        });
+
+        this.track.addEventListener('mouseup', () => {
+          isDown = false;
+          this.track.style.cursor = 'grab';
+        });
+
+        this.track.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - this.track.offsetLeft;
+          const walk = (x - startX) * 2;
+          this.track.scrollLeft = scrollLeft - walk;
+        });
+
+        this.track.style.cursor = 'grab';
+      }
+    }
+
+    customElements.define('collection-carousel-{{ ai_gen_id }}', CollectionCarousel{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection carousel",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    },
+    {
+      "type": "collection",
+      "id": "collection_6",
+      "label": "Collection 6"
+    },
+    {
+      "type": "collection",
+      "id": "collection_7",
+      "label": "Collection 7"
+    },
+    {
+      "type": "collection",
+      "id": "collection_8",
+      "label": "Collection 8"
+    },
+    {
+      "type": "collection",
+      "id": "collection_9",
+      "label": "Collection 9"
+    },
+    {
+      "type": "collection",
+      "id": "collection_10",
+      "label": "Collection 10"
+    },
+    {
+      "type": "collection",
+      "id": "collection_11",
+      "label": "Collection 11"
+    },
+    {
+      "type": "collection",
+      "id": "collection_12",
+      "label": "Collection 12"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "label": "Spacing between items",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Desktop settings"
+    },
+    {
+      "type": "range",
+      "id": "image_size",
+      "label": "Image size",
+      "min": 100,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Mobile settings"
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_size",
+      "label": "Image size",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection carousel"
+    }
+  ]
+}
+{% endschema %}
