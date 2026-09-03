@@ -14,50 +14,51 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "text_9eccFP": {
+        "brand": {
           "type": "text",
           "settings": {
             "heading": "",
-            "subtext": "<p>Zevaraaz celebrates modern silver craftsmanship, clean, timeless pieces crafted in 925 sterling silver. Elegant everyday jewellery designed to keep.<br/></p>"
+            "subtext": "<p>92.5 hallmarked sterling silver, made in Vaishali Nagar, Jaipur. Heritage motifs, modern silhouettes, everyday wear.</p>"
           }
         },
-        "link_list_4aAWhL": {
+        "collections": {
+          "type": "text",
+          "settings": {
+            "heading": "Collections",
+            "subtext": "<p><a href=\"/collections/aabha-kundan-silver-rings\">Aabha · Heritage</a><br/><a href=\"/collections/rekha-silver-bracelets\">Nira · Everyday</a><br/><a href=\"/collections/kala-oxidised-silver\">Kala · Oxidised</a><br/><a href=\"/collections/jyoti-subtle-sparkle-copy\">Ratna · Gemstone</a></p>"
+          }
+        },
+        "help": {
           "type": "link_list",
           "settings": {
-            "heading": "Help & Care",
+            "heading": "Help & care",
             "menu": "footer-help"
           }
         },
-        "text_iUKPR8": {
+        "talk": {
           "type": "text",
           "settings": {
-            "heading": "Contact Us",
-            "subtext": "<p>Zevaraz Jewels <br/>Vaishali Nagar, Jaipur<br/><br/>Email: <a href=\"mailto:hello@zevaraaz.com\">hello.zevaraz@gmail.com</a><br/>WhatsApp: <a href=\"https://wa.me/91XXXXXXXXXX\">+91-9461234296</a><br/></p>"
+            "heading": "Talk to us",
+            "subtext": "<p><a href=\"https://wa.me/919461234296\">WhatsApp +91 94612 34296</a><br/><a href=\"mailto:hello.zevaraz@gmail.com\">hello.zevaraz@gmail.com</a><br/>Mon–Sat, 10am–7pm IST</p>"
           }
         }
       },
-      "block_order": [
-        "text_9eccFP",
-        "link_list_4aAWhL",
-        "text_iUKPR8"
-      ],
+      "block_order": ["brand", "collections", "help", "talk"],
       "settings": {
-        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
+        "color_scheme": "scheme-3",
         "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
-        "enable_follow_on_shop": true,
+        "newsletter_heading": "",
+        "enable_follow_on_shop": false,
         "show_social": true,
         "enable_country_selector": false,
-        "enable_language_selector": true,
-        "payment_enable": true,
+        "enable_language_selector": false,
+        "payment_enable": false,
         "show_policy": true,
         "margin_top": 0,
-        "padding_top": 4,
-        "padding_bottom": 20
+        "padding_top": 36,
+        "padding_bottom": 28
       }
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["footer"]
 }
