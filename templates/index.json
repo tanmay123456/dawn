@@ -12,7 +12,7 @@
     "hero": {
       "type": "zev-hero",
       "settings": {
-        "image": "shopify://shop_images/ZEV-HERO-1.jpg",
+        "image": "shopify://shop_images/ZEVARAZ_3000px_wide_banner.png",
         "eyebrow": "Collection 01 · Aabha",
         "heading": "Indian heritage.\nModern minimal.\nReal silver.",
         "body": "Hallmarked 92.5 sterling silver, cut and finished in our own Jaipur workshop.",
@@ -25,23 +25,87 @@
     "trust": {
       "type": "zev-trust-bar",
       "blocks": {
-        "t1": { "type": "item", "settings": { "title": "92.5 hallmarked silver", "note": "BIS stamped on every piece" } },
-        "t2": { "type": "item", "settings": { "title": "Direct from Jaipur", "note": "Our own workshop, no middlemen" } },
-        "t3": { "type": "item", "settings": { "title": "7-day easy returns", "note": "Unworn, in original packaging" } },
-        "t4": { "type": "item", "settings": { "title": "Free shipping on all orders", "note": "Insured, tracked, 3–5 days" } }
+        "t1": {
+          "type": "item",
+          "settings": {
+            "title": "92.5 Hallmarked silver",
+            "note": "BIS stamped on every piece"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "title": "Direct from Jaipur",
+            "note": "Our own workshop, no middlemen"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "title": "7-day easy returns",
+            "note": "Unworn, in original packaging"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "title": "Free shipping on all orders",
+            "note": "Insured, tracked, 4–7 days"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4"],
-      "settings": { "mobile_layout": "marquee" }
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "mobile_layout": "marquee"
+      }
     },
     "navigator": {
       "type": "zev-collection-navigator",
       "blocks": {
-        "c1": { "type": "collection", "settings": { "collection": "aabha-kundan-silver-rings", "number": "Collection 01", "tag_line": "Kundan · Heritage" } },
-        "c2": { "type": "collection", "settings": { "collection": "rekha-silver-bracelets", "number": "Collection 02", "tag_line": "Minimal · Everyday" } },
-        "c3": { "type": "collection", "settings": { "collection": "kala-oxidised-silver", "number": "Collection 03", "tag_line": "Oxidised · Artisanal" } },
-        "c4": { "type": "collection", "settings": { "collection": "jyoti-subtle-sparkle-copy", "number": "Collection 04", "tag_line": "Gemstone · Festive" } }
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "collection": "aabha-kundan-silver-rings",
+            "number": "Collection 01",
+            "tag_line": "Kundan · Heritage"
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "collection": "rekha-silver-bracelets",
+            "number": "Collection 02",
+            "tag_line": "Minimal · Everyday"
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "collection": "kala-oxidised-silver",
+            "number": "Collection 03",
+            "tag_line": "Oxidised · Artisanal"
+          }
+        },
+        "c4": {
+          "type": "collection",
+          "settings": {
+            "collection": "jyoti-subtle-sparkle-copy",
+            "number": "Collection 04",
+            "tag_line": "Gemstone · Festive"
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3", "c4"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
       "settings": {
         "eyebrow": "Four collections",
         "heading": "Start with the mood, not the metal",
@@ -52,11 +116,33 @@
     "hallmark": {
       "type": "zev-hallmark-band",
       "blocks": {
-        "p1": { "type": "proof", "settings": { "title": "Look for the 925 stamp", "note": "Inside the band or on the clasp, laser-marked." } },
-        "p2": { "type": "proof", "settings": { "title": "BIS hallmark triangle", "note": "The mark of the Bureau of Indian Standards." } },
-        "p3": { "type": "proof", "settings": { "title": "It tarnishes, gently", "note": "Real silver ages. Plating flakes. Ours polishes back." } }
+        "p1": {
+          "type": "proof",
+          "settings": {
+            "title": "Look for the 925 stamp",
+            "note": "Inside the band or on the clasp, laser-marked."
+          }
+        },
+        "p2": {
+          "type": "proof",
+          "settings": {
+            "title": "BIS hallmark triangle",
+            "note": "The mark of the Bureau of Indian Standards."
+          }
+        },
+        "p3": {
+          "type": "proof",
+          "settings": {
+            "title": "It tarnishes, gently",
+            "note": "Real silver ages. Plating flakes. Ours polishes back."
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
       "settings": {
         "eyebrow": "Authenticity",
         "heading": "How to tell it is real silver",
@@ -94,13 +180,49 @@
     "instagram": {
       "type": "zev-instagram",
       "blocks": {
-        "i1": { "type": "post", "settings": { "image": "shopify://shop_images/nk49-2.jpg" } },
-        "i2": { "type": "post", "settings": { "image": "shopify://shop_images/rt14-9.png" } },
-        "i3": { "type": "post", "settings": { "image": "shopify://shop_images/nk46-1.jpg" } },
-        "i4": { "type": "post", "settings": { "image": "shopify://shop_images/nk48-1.jpg" } },
-        "i5": { "type": "post", "settings": { "image": "shopify://shop_images/nk45-2.jpg" } }
+        "i1": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/nk49-2.jpg",
+            "link": ""
+          }
+        },
+        "i2": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/rt14-9.png",
+            "link": ""
+          }
+        },
+        "i3": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/nk46-1.jpg",
+            "link": ""
+          }
+        },
+        "i4": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/nk48-1.jpg",
+            "link": ""
+          }
+        },
+        "i5": {
+          "type": "post",
+          "settings": {
+            "image": "shopify://shop_images/nk45-2.jpg",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["i1", "i2", "i3", "i4", "i5"],
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4",
+        "i5"
+      ],
       "settings": {
         "heading": "Worn in real light",
         "handle": "@zevaraz.silver",
@@ -108,5 +230,13 @@
       }
     }
   },
-  "order": ["hero", "trust", "navigator", "hallmark", "new_in", "baby", "instagram"]
+  "order": [
+    "hero",
+    "trust",
+    "navigator",
+    "hallmark",
+    "new_in",
+    "baby",
+    "instagram"
+  ]
 }
