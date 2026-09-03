@@ -26,14 +26,6 @@
             "hide_mobile": false
           }
         },
-        "claim_shipping": {
-          "type": "claim",
-          "settings": {
-            "text": "Free shipping on all orders",
-            "emphasis": "ivory",
-            "hide_mobile": false
-          }
-        },
         "claim_jaipur": {
           "type": "claim",
           "settings": {
@@ -45,7 +37,6 @@
       },
       "block_order": [
         "claim_hallmark",
-        "claim_shipping",
         "claim_jaipur"
       ],
       "settings": {}
