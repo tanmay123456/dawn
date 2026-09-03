@@ -1,61 +1,119 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "176987452385ada2da": {
+      "type": "_blocks",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "ai_gen_block_52fe72d_wG4JEE": {
+          "type": "ai_gen_block_52fe72d",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
+            "desktop_height": 100,
+            "desktop_image_fit": "cover",
+            "mobile_height": 55,
+            "mobile_image_fit": "cover",
+            "autoplay": true,
+            "slide_duration": 5,
+            "transition_speed": 1,
+            "show_cta_button": false,
+            "button_text": "Shop now",
+            "button_link": "",
+            "button_font_size": 16,
+            "button_padding_vertical": 12,
+            "button_padding_horizontal": 32,
+            "button_border_radius": 4,
+            "button_border_width": 0,
+            "button_background_color": "#121212",
+            "button_text_color": "#ffffff",
+            "button_border_color": "#121212",
+            "button_hover_background_color": "#000000",
+            "button_hover_text_color": "#ffffff",
+            "slide_1_image": "shopify://shop_images/ZEV-HERO-1.jpg",
+            "slide_2_image": "shopify://shop_images/ZEV-HERO-2.png",
+            "slide_3_image": "shopify://shop_images/ZEV-HERO-3.png",
+            "custom_css": ""
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "ai_gen_block_52fe72d_wG4JEE"
       ],
+      "settings": {}
+    },
+    "17698732491905c57b": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_e21b6aa_ehJr7x": {
+          "type": "ai_gen_block_e21b6aa",
+          "settings": {
+            "collection_1": "bangles",
+            "collection_2": "bracelets",
+            "collection_3": "earrings",
+            "collection_4": "rings",
+            "collection_5": "baby-pendants",
+            "collection_6": "necklace",
+            "collection_7": "anklets",
+            "collection_8": "toe-rings",
+            "collection_9": "kids-bracelets",
+            "collection_10": "",
+            "collection_11": "",
+            "collection_12": "",
+            "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
+            "item_spacing": 4,
+            "image_size": 150,
+            "text_size": 14,
+            "mobile_image_size": 100,
+            "mobile_text_size": 14
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_e21b6aa_ehJr7x"
+      ],
+      "settings": {}
+    },
+    "image_banner_kkREH4": {
+      "type": "image-banner",
+      "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
+        "image": "shopify://shop_images/Generated_Image_January_30_2026_-_4_37PM.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
         "image_behavior": "none",
+        "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
+        "show_text_box": true,
+        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
+        "stack_images_on_mobile": true,
         "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "show_text_below": true
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured products",
+        "collection": "earrings",
+        "products_to_show": 8,
+        "title": "",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
+        "columns_desktop": 5,
+        "enable_desktop_slider": true,
+        "full_width": true,
         "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
+        "view_all_style": "link",
+        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
         "image_ratio": "adapt",
         "image_shape": "default",
         "show_secondary_image": true,
@@ -63,13 +121,102 @@
         "show_rating": false,
         "quick_add": "none",
         "columns_mobile": "2",
-        "padding_top": 44,
+        "swipe_on_mobile": false,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "featured_collection_6eAGnR": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "bangles",
+        "products_to_show": 8,
+        "title": "",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 5,
+        "enable_desktop_slider": true,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "link",
+        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_yTLQMg": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_b4TyRH": {
+          "type": "column",
+          "settings": {
+            "title": "Crafted in 925 Silver",
+            "text": "<p>Genuine sterling silver designed for everyday wear.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_mkiBA3": {
+          "type": "column",
+          "settings": {
+            "title": "Thoughtfully Packaged",
+            "text": "<p>Each order includes care and authenticity card with a pouch to store your jewellery</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_PNHRxR": {
+          "type": "column",
+          "settings": {
+            "title": "Designed to Last",
+            "text": "<p>Minimal forms finished with care and attention.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_b4TyRH",
+        "column_mkiBA3",
+        "column_PNHRxR"
+      ],
+      "disabled": true,
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "square",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "scheme-e8295562-9b57-4b00-9448-9b67546be1ba",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
         "padding_bottom": 36
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "176987452385ada2da",
+    "17698732491905c57b",
+    "image_banner_kkREH4",
+    "featured_collection",
+    "featured_collection_6eAGnR",
+    "multicolumn_yTLQMg"
   ]
 }
