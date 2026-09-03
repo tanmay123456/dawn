@@ -17,6 +17,7 @@
   justify-content: space-between;
   gap: 14px;
   padding: var(--zev-card-pad, 22px);
+  flex-wrap: wrap;
 }
 .card-wrapper .card > .card__content > .card__information > .card__heading {
   margin: 0;
@@ -24,7 +25,6 @@
   min-width: 0;
   overflow-wrap: break-word;
   word-break: break-word;
-}
 }
 .card-wrapper .card > .card__content > .card__information > .card-information {
   display: flex;
@@ -34,6 +34,7 @@
   flex: 0 0 auto;
   padding: 0;
   text-align: right;
+}
 }
 .card-wrapper .card-information .price { white-space: nowrap; }
 .card-wrapper .card-information .caption-large:empty { display: none; }
