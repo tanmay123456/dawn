@@ -1,0 +1,84 @@
+{%- comment -%}
+  Zevaraz — Proof band (PDP, below the fold)
+  The same three proof points as homepage 1.6. Repeating the hallmark argument
+  on the product page is intentional, not an oversight.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+{%- liquid
+  assign filled = 0
+  for block in section.blocks
+    if block.settings.title != blank
+      assign filled = filled | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if filled > 0 -%}
+  <div class="zev-proofband">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.title != blank -%}
+        <div class="zev-proofband__item" {{ block.shopify_attributes }}>
+          <p class="zev-proofband__title">{{ block.settings.title }}</p>
+          {%- if block.settings.note != blank -%}
+            <p class="zev-proofband__note">{{ block.settings.note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{%- style -%}
+  .zev-proofband {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    padding: 60px var(--zev-gutter, 56px);
+    background: var(--zev-graphite, #1C1C1C);
+  }
+  .zev-proofband__title {
+    margin: 0 0 8px;
+    font: 600 16px/1.3 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-on-dark, #F8F8F6);
+  }
+  .zev-proofband__note {
+    margin: 0;
+    font: 400 13px/1.6 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  @media (max-width: 749px) {
+    .zev-proofband { grid-template-columns: 1fr; gap: 22px; padding: 36px var(--zev-gutter, 20px); }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Proof band",
+  "tag": "section",
+  "class": "zev-proofband-section",
+  "max_blocks": 3,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "proof",
+      "name": "Proof point",
+      "settings": [
+        { "id": "title", "type": "text", "label": "Title" },
+        { "id": "note", "type": "text", "label": "Supporting line" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Proof band",
+      "blocks": [
+        { "type": "proof", "settings": { "title": "Look for the 925 stamp", "note": "Inside the band or on the clasp, laser-marked." } },
+        { "type": "proof", "settings": { "title": "BIS hallmark triangle", "note": "The mark of the Bureau of Indian Standards." } },
+        { "type": "proof", "settings": { "title": "It tarnishes, gently", "note": "Real silver ages. Plating flakes. Ours polishes back." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
