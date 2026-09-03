@@ -94,11 +94,11 @@
     "instagram": {
       "type": "zev-instagram",
       "blocks": {
-        "i1": { "type": "post", "settings": {} },
-        "i2": { "type": "post", "settings": {} },
-        "i3": { "type": "post", "settings": {} },
-        "i4": { "type": "post", "settings": {} },
-        "i5": { "type": "post", "settings": {} }
+        "i1": { "type": "post", "settings": { "image": "shopify://shop_images/nk49-2.jpg" } },
+        "i2": { "type": "post", "settings": { "image": "shopify://shop_images/rt14-9.png" } },
+        "i3": { "type": "post", "settings": { "image": "shopify://shop_images/nk46-1.jpg" } },
+        "i4": { "type": "post", "settings": { "image": "shopify://shop_images/nk48-1.jpg" } },
+        "i5": { "type": "post", "settings": { "image": "shopify://shop_images/nk45-2.jpg" } }
       },
       "block_order": ["i1", "i2", "i3", "i4", "i5"],
       "settings": {
