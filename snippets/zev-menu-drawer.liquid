@@ -1,0 +1,111 @@
+{%- comment -%}
+  Zevaraz — Mobile navigation (screen 5)
+  A drop-in replacement for Dawn's 'header-drawer'. The outer scaffolding
+  (header-drawer / details#Details-menu-drawer-container / #menu-drawer) is kept
+  byte-for-byte so Dawn's MenuDrawer JS, focus trapping and Escape handling all
+  still work. Only the contents change.
+
+  Menus it reads, all editable in Content -> Menus:
+    main-menu            the "Collections" parent's children become the four
+                         image rows; its handle is matched to a collection so
+                         the row can show that collection's image
+    mobile-categories    the six category cells. Falls back to the top-level
+                         main-menu items if the menu does not exist
+    mobile-secondary     the small links above the bottom edge. Renders nothing
+                         if the menu does not exist
+
+  Images in the menu are the point — the collections mean nothing as words alone.
+{%- endcomment -%}
+
+{%- liquid
+  assign collections_parent = null
+  for link in section.settings.menu.links
+    if link.links != blank and collections_parent == null
+      assign collections_parent = link
+    endif
+  endfor
+
+  assign categories = linklists['mobile-categories'].links
+  if categories == blank
+    assign categories = section.settings.menu.links
+  endif
+
+  assign secondary = linklists['mobile-secondary'].links
+-%}
+
+<header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
+  <details id="Details-menu-drawer-container" class="menu-drawer-container">
+    <summary
+      class="header__icon header__icon--menu header__icon--summary link focus-inset"
+      aria-label="{{ 'sections.header.menu' | t }}"
+    >
+      <span>
+        {{- 'icon-hamburger.svg' | inline_asset_content -}}
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </span>
+    </summary>
+
+    <div id="menu-drawer" class="gradient menu-drawer motion-reduce zev-drawer">
+      <div class="menu-drawer__inner-container">
+        <div class="menu-drawer__navigation-container">
+          <nav class="menu-drawer__navigation zev-drawer__nav">
+
+            {%- if collections_parent and collections_parent.links.size > 0 -%}
+              <p class="zev-drawer__eyebrow">Shop by collection</p>
+              <ul class="zev-drawer__collections list-unstyled" role="list">
+                {%- for link in collections_parent.links -%}
+                  {%- liquid
+                    assign handle = link.url | split: '/' | last
+                    assign c = collections[handle]
+                    assign row_image = c.featured_image
+                    assign tag_line = c.metafields.custom.tag_line
+                  -%}
+                  <li>
+                    <a class="zev-drawer__crow" href="{{ link.url }}">
+                      <span class="zev-drawer__cthumb">
+                        {%- if row_image -%}
+                          {{ row_image | image_url: width: 168 | image_tag: loading: 'lazy', widths: '56,112,168', sizes: '56px', alt: '' }}
+                        {%- endif -%}
+                      </span>
+                      <span class="zev-drawer__ctext">
+                        <span class="zev-drawer__cname">{{ link.title }}</span>
+                        {%- if tag_line != blank -%}
+                          <span class="zev-drawer__ctag">{{ tag_line }}</span>
+                        {%- endif -%}
+                      </span>
+                      <span class="zev-drawer__carrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- if categories.size > 0 -%}
+              <p class="zev-drawer__eyebrow">Shop by category</p>
+              <ul class="zev-drawer__cats list-unstyled" role="list">
+                {%- for link in categories -%}
+                  {%- unless link.links != blank -%}
+                    <li><a class="zev-drawer__cat" href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endunless -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            <div class="zev-drawer__foot">
+              <a class="zev-drawer__wa" href="https://wa.me/919461234296" target="_blank" rel="noopener">WhatsApp us</a>
+              {%- if secondary.size > 0 -%}
+                <p class="zev-drawer__secondary">
+                  {%- for link in secondary -%}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                    {%- unless forloop.last %} <span aria-hidden="true">·</span> {% endunless -%}
+                  {%- endfor -%}
+                </p>
+              {%- endif -%}
+            </div>
+
+          </nav>
+        </div>
+      </div>
+    </div>
+  </details>
+</header-drawer>
