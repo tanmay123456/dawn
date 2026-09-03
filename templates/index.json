@@ -143,6 +143,7 @@
         "p2",
         "p3"
       ],
+      "custom_css": [],
       "settings": {
         "eyebrow": "Authenticity",
         "heading": "How to tell it is real silver",
@@ -160,16 +161,17 @@
         "eyebrow": "New in · Ratna",
         "heading": "Silver meets colour",
         "collection": "jyoti-subtle-sparkle-copy",
-        "link_label": "Shop Ratna",
+        "link_label": "SHOP RATNA",
         "count": 4,
-        "density": "full",
-        "quick_add": false
+        "density": "compact",
+        "quick_add": true
       }
     },
     "baby": {
       "type": "zev-image-band",
       "settings": {
-        "image_side": "left",
+        "image": "shopify://shop_images/exec-1c326d5a-3a2f-4133-a20c-f411669f42ba.png",
+        "image_side": "right",
         "scheme": "stone",
         "eyebrow": "Baby & Kids",
         "heading": "Her first silver, and the one she keeps",
