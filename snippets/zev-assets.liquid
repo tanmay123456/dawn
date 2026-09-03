@@ -4,10 +4,10 @@
   font weights are present without editing layout/theme.liquid. Repeated tags
   are deduplicated by the browser; this costs nothing after the first section.
 
-  If you prefer it in one place, move these three lines into theme.liquid
-  before </head> and delete the render calls.
+  zev-dawn16.css is a small compatibility layer and must load after the tokens.
 {%- endcomment -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap">
 {{ 'zev-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'zev-dawn16.css' | asset_url | stylesheet_tag }}
