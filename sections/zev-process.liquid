@@ -1,0 +1,124 @@
+{%- comment -%}
+  Zevaraz — Process (brand story). Numbered rows, cast to clasp.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+<div class="zev-process">
+  <div class="zev-process__intro">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="zev-process__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="zev-process__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <div class="zev-process__body">{{ section.settings.body }}</div>
+    {%- endif -%}
+  </div>
+
+  <ol class="zev-process__steps">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.title != blank -%}
+        <li class="zev-process__step" {{ block.shopify_attributes }}>
+          <span class="zev-process__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <span class="zev-process__name">{{ block.settings.title }}</span>
+          {%- if block.settings.body != blank -%}
+            <span class="zev-process__desc">{{ block.settings.body }}</span>
+          {%- endif -%}
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ol>
+</div>
+
+{%- style -%}
+  .zev-process {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 70px;
+    padding: 90px var(--zev-gutter, 56px);
+    background: var(--zev-ivory, #F8F8F6);
+  }
+  .zev-process__eyebrow {
+    margin: 0 0 12px;
+    font: 500 11px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--zev-emerald, #0F6452);
+  }
+  .zev-process__heading {
+    margin: 0 0 16px;
+    font: 600 var(--zev-h3, 38px)/1.14 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-process__body {
+    font: 400 16px/1.7 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-body-soft, #5A5654);
+  }
+  .zev-process__body p { margin: 0; }
+
+  .zev-process__steps { margin: 0; padding: 0; list-style: none; }
+  .zev-process__step {
+    display: grid;
+    grid-template-columns: 56px 200px 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding: 24px 0;
+    border-top: 1px solid var(--zev-line, #E6E2DA);
+  }
+  .zev-process__num {
+    font: 600 20px/1 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-silver, #C0C0C0);
+  }
+  .zev-process__name {
+    font: 600 15px/1.4 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-process__desc {
+    font: 400 14px/1.7 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-body-soft, #5A5654);
+  }
+
+  @media (max-width: 989px) {
+    .zev-process { grid-template-columns: 1fr; gap: 28px; padding: 40px var(--zev-gutter, 20px); }
+    .zev-process__step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .zev-process__desc { grid-column: 2; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Process",
+  "tag": "section",
+  "class": "zev-process-section",
+  "max_blocks": 8,
+  "settings": [
+    { "id": "eyebrow", "type": "text", "label": "Eyebrow", "default": "From cast to clasp" },
+    { "id": "heading", "type": "text", "label": "Heading", "default": "Six karigars, Vaishali Nagar" },
+    { "id": "body", "type": "richtext", "label": "Body" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "id": "title", "type": "text", "label": "Step name" },
+        { "id": "body", "type": "text", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Process",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Sourcing" } },
+        { "type": "step", "settings": { "title": "Casting & forming" } },
+        { "type": "step", "settings": { "title": "Setting & finishing" } },
+        { "type": "step", "settings": { "title": "Hallmarking" } },
+        { "type": "step", "settings": { "title": "Packing" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

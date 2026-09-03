@@ -1,0 +1,86 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "statement": {
+      "type": "zev-statement",
+      "settings": {
+        "scheme": "ivory",
+        "size": "opening",
+        "eyebrow": "Our craft",
+        "heading": "Premium silver, made accessible — without compromising authenticity or craft",
+        "body": "",
+        "cta_label": "",
+        "cta_link": ""
+      }
+    },
+    "workshop_image": {
+      "type": "zev-image-full",
+      "settings": { "height": 520 }
+    },
+    "pillars": {
+      "type": "zev-pillars",
+      "blocks": {
+        "heritage": {
+          "type": "pillar",
+          "settings": {
+            "title": "Heritage",
+            "body": "<p>Designs rooted in Indian motifs — lotus, crescent, temple lines, floral strokes. Every piece carries cultural memory.</p>"
+          }
+        },
+        "authenticity": {
+          "type": "pillar",
+          "settings": {
+            "title": "Authenticity",
+            "body": "<p>92.5 hallmarked sterling silver, always. It is the first thing we prove and the last thing we compromise.</p>"
+          }
+        },
+        "accessibility": {
+          "type": "pillar",
+          "settings": {
+            "title": "Accessibility",
+            "body": "<p>Premium feel at approachable pricing. Luxury is not exclusion, it is elevation.</p>"
+          }
+        }
+      },
+      "block_order": ["heritage", "authenticity", "accessibility"],
+      "settings": {}
+    },
+    "process": {
+      "type": "zev-process",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Sourcing", "body": "" } },
+        "s2": { "type": "step", "settings": { "title": "Casting & forming", "body": "" } },
+        "s3": { "type": "step", "settings": { "title": "Setting & finishing", "body": "" } },
+        "s4": { "type": "step", "settings": { "title": "Hallmarking", "body": "" } },
+        "s5": { "type": "step", "settings": { "title": "Packing", "body": "" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "settings": {
+        "eyebrow": "From cast to clasp",
+        "heading": "Six karigars, Vaishali Nagar",
+        "body": ""
+      }
+    },
+    "closing": {
+      "type": "zev-statement",
+      "settings": {
+        "scheme": "graphite",
+        "size": "closing",
+        "eyebrow": "Brand truth",
+        "heading": "Indian heritage. Modern minimal. Real silver.",
+        "body": "",
+        "cta_label": "Shop the collections",
+        "cta_link": "/collections"
+      }
+    }
+  },
+  "order": ["statement", "workshop_image", "pillars", "process", "closing"]
+}
