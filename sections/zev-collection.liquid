@@ -1,0 +1,530 @@
+{%- comment -%}
+  Zevaraz — Collection grid (README section 2)
+
+  Replaces Dawn's main-collection-product-grid. Three parts:
+    filter bar  — Search & Discovery filters as pills, result count, sort
+    grid        — 3-up desktop / 2-up mobile on the shared zev-product-card
+    pagination  — progress rail, "Showing n of N", Load more
+
+  Load more is progressive enhancement. With JavaScript off the button is an
+  ordinary next-page link, so the collection is always fully browsable.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+{%- liquid
+  assign per_page = section.settings.products_per_page | default: 9
+-%}
+
+{% paginate collection.products by per_page %}
+
+  {%- assign shown = paginate.current_offset | plus: paginate.page_size -%}
+  {%- if shown > paginate.items -%}{%- assign shown = paginate.items -%}{%- endif -%}
+  {%- assign pct = 0 -%}
+  {%- if paginate.items > 0 -%}
+    {%- assign pct = shown | times: 100 | divided_by: paginate.items -%}
+  {%- endif -%}
+
+  <div class="zev-coll" id="zev-coll-{{ section.id }}" data-zev-coll>
+
+    {%- if section.settings.show_filters -%}
+      <div class="zev-filterbar">
+        <button class="zev-filterbar__toggle" type="button" data-zev-filter-open>
+          Filter &amp; sort
+        </button>
+
+        <form class="zev-filterbar__panel" data-zev-panel id="zev-filter-form-{{ section.id }}">
+          <div class="zev-filterbar__head">
+            <span class="zev-filterbar__headtitle">Filter &amp; sort</span>
+            <button class="zev-filterbar__close" type="button" data-zev-filter-close aria-label="Close">&times;</button>
+          </div>
+
+          <div class="zev-filterbar__pills">
+            {%- for filter in collection.filters -%}
+              {%- liquid
+                assign active_label = ''
+                if filter.type == 'price_range'
+                  if filter.min_value.value != nil or filter.max_value.value != nil
+                    assign active_label = 'Set'
+                  endif
+                else
+                  for v in filter.active_values
+                    if forloop.first
+                      assign active_label = v.label
+                    else
+                      assign active_label = active_label | append: ', ' | append: v.label
+                    endif
+                  endfor
+                endif
+              -%}
+
+              <details class="zev-filter">
+                <summary class="zev-filter__pill">
+                  <span class="zev-filter__label">{{ filter.label }}</span>
+                  <span class="zev-filter__value">{% if active_label != blank %}{{ active_label }}{% else %}All{% endif %}</span>
+                  <span class="zev-filter__caret" aria-hidden="true"></span>
+                </summary>
+
+                <div class="zev-filter__panel">
+                  {%- if filter.type == 'price_range' -%}
+                    <div class="zev-filter__price">
+                      <label>
+                        <span>From</span>
+                        <input type="number" name="{{ filter.min_value.param_name }}" min="0"
+                               max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                               value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                               placeholder="0">
+                      </label>
+                      <label>
+                        <span>To</span>
+                        <input type="number" name="{{ filter.max_value.param_name }}" min="0"
+                               max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                               value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                               placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                      </label>
+                    </div>
+                  {%- else -%}
+                    <ul class="zev-filter__list">
+                      {%- for value in filter.values -%}
+                        <li>
+                          <label class="zev-filter__opt{% if value.count == 0 and value.active == false %} is-empty{% endif %}">
+                            <input type="checkbox"
+                                   name="{{ value.param_name }}"
+                                   value="{{ value.value }}"
+                                   {% if value.active %}checked{% endif %}
+                                   {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                            <span>{{ value.label }}</span>
+                            <span class="zev-filter__count">{{ value.count }}</span>
+                          </label>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+              </details>
+            {%- endfor -%}
+          </div>
+
+          <div class="zev-filterbar__right">
+            <span class="zev-filterbar__count">
+              {{ paginate.items }} {% if paginate.items == 1 %}piece{% else %}pieces{% endif %}
+            </span>
+
+            {%- if section.settings.show_sorting -%}
+              {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+              <label class="zev-filterbar__sort">
+                <span>Sort:</span>
+                <select name="sort_by">
+                  {%- for option in collection.sort_options -%}
+                    <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+                  {%- endfor -%}
+                </select>
+              </label>
+            {%- endif -%}
+          </div>
+
+          <div class="zev-filterbar__actions">
+            <a class="zev-filterbar__clear" href="{{ collection.url }}">Clear all</a>
+            <button class="zev-filterbar__apply" type="submit">Show {{ paginate.items }} results</button>
+          </div>
+        </form>
+      </div>
+    {%- endif -%}
+
+    <div class="zev-coll__grid" data-zev-grid>
+      {%- for product in collection.products -%}
+        {% render 'zev-product-card', product: product %}
+      {%- else -%}
+        <p class="zev-coll__empty">No pieces match these filters yet.</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.items > 0 -%}
+      <div class="zev-coll__more">
+        <div class="zev-rail" role="presentation">
+          <span class="zev-rail__fill" data-zev-rail style="width: {{ pct }}%"></span>
+        </div>
+        <p class="zev-coll__showing" data-zev-showing
+           data-shown="{{ shown }}" data-total="{{ paginate.items }}">
+          Showing {{ shown }} of {{ paginate.items }}
+        </p>
+        {%- if paginate.next.is_link -%}
+          <a class="zev-coll__loadmore" href="{{ paginate.next.url }}" data-zev-loadmore>Load more</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('zev-coll-{{ section.id }}');
+      if (!root || root.dataset.zevReady === '1') return;
+      root.dataset.zevReady = '1';
+
+      /* ---- filter drawer (mobile) + auto-submit ---- */
+      var panel = root.querySelector('[data-zev-panel]');
+      var openBtn = root.querySelector('[data-zev-filter-open]');
+      var closeBtn = root.querySelector('[data-zev-filter-close]');
+
+      if (openBtn && panel) {
+        openBtn.addEventListener('click', function () {
+          panel.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+      if (closeBtn && panel) {
+        closeBtn.addEventListener('click', function () {
+          panel.classList.remove('is-open');
+          document.body.style.overflow = '';
+        });
+      }
+      if (panel) {
+        panel.addEventListener('change', function (e) {
+          if (window.matchMedia('(max-width: 749px)').matches && e.target.name !== 'sort_by') return;
+          panel.submit();
+        });
+      }
+
+      /* ---- load more ---- */
+      var grid = root.querySelector('[data-zev-grid]');
+      var showing = root.querySelector('[data-zev-showing]');
+      var rail = root.querySelector('[data-zev-rail]');
+
+      root.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-zev-loadmore]');
+        if (!btn || !grid) return;
+        e.preventDefault();
+        var url = btn.getAttribute('href');
+        btn.classList.add('is-loading');
+        btn.textContent = 'Loading…';
+
+        fetch(url)
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var nextGrid = doc.querySelector('[data-zev-grid]');
+            var nextBtn = doc.querySelector('[data-zev-loadmore]');
+            var nextShowing = doc.querySelector('[data-zev-showing]');
+
+            if (nextGrid) {
+              Array.prototype.slice.call(nextGrid.children).forEach(function (node) {
+                grid.appendChild(node);
+              });
+            }
+            if (nextShowing && showing) {
+              var shown = Number(nextShowing.getAttribute('data-shown'));
+              var total = Number(nextShowing.getAttribute('data-total'));
+              showing.textContent = 'Showing ' + shown + ' of ' + total;
+              showing.setAttribute('data-shown', shown);
+              if (rail && total) rail.style.width = Math.round((shown / total) * 100) + '%';
+            }
+            if (nextBtn) {
+              btn.setAttribute('href', nextBtn.getAttribute('href'));
+              btn.textContent = 'Load more';
+              btn.classList.remove('is-loading');
+            } else {
+              btn.remove();
+            }
+          })
+          .catch(function () {
+            btn.textContent = 'Load more';
+            btn.classList.remove('is-loading');
+          });
+      });
+    })();
+  </script>
+
+{% endpaginate %}
+
+{%- style -%}
+  .zev-coll { background: var(--zev-ivory, #F8F8F6); }
+
+  /* ---------- filter bar ---------- */
+  .zev-filterbar {
+    border-top: 1px solid var(--zev-line, #E6E2DA);
+    border-bottom: 1px solid var(--zev-line, #E6E2DA);
+    padding: 18px var(--zev-gutter, 56px);
+  }
+  .zev-filterbar__toggle { display: none; }
+  .zev-filterbar__panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .zev-filterbar__head,
+  .zev-filterbar__actions { display: none; }
+
+  .zev-filterbar__pills { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .zev-filter { position: relative; }
+  .zev-filter__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border: 1px solid var(--zev-line-field, #DCD8D0);
+    border-radius: var(--zev-radius, 0);
+    cursor: pointer;
+    list-style: none;
+    font: 400 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+  }
+  .zev-filter__pill::-webkit-details-marker { display: none; }
+  .zev-filter__label { color: var(--zev-taupe, #A8999C); }
+  .zev-filter__value { font-weight: 500; color: var(--zev-ink, #1C1C1C); }
+  .zev-filter__caret {
+    width: 9px;
+    height: 9px;
+    border-right: 1px solid var(--zev-taupe, #A8999C);
+    border-bottom: 1px solid var(--zev-taupe, #A8999C);
+    transform: rotate(45deg) translate(-2px, -2px);
+  }
+  .zev-filter[open] .zev-filter__pill { border-color: var(--zev-ink, #1C1C1C); }
+
+  .zev-filter__panel {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 240px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 14px 16px;
+    background: var(--zev-ivory, #F8F8F6);
+    border: 1px solid var(--zev-line, #E6E2DA);
+    border-radius: var(--zev-radius, 0);
+  }
+  .zev-filter__list { margin: 0; padding: 0; list-style: none; }
+  .zev-filter__opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    font: 400 13px/1.4 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-ink, #1C1C1C);
+    cursor: pointer;
+  }
+  .zev-filter__opt.is-empty { color: var(--zev-taupe, #A8999C); }
+  .zev-filter__count { margin-left: auto; color: var(--zev-taupe, #A8999C); font-size: 12px; }
+  .zev-filter__price { display: flex; gap: 12px; }
+  .zev-filter__price label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font: 400 12px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-filter__price input {
+    min-height: 44px;
+    padding: 0 10px;
+    border: 1px solid var(--zev-line-field, #DCD8D0);
+    border-radius: var(--zev-radius, 0);
+    background: transparent;
+    font: 400 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-ink, #1C1C1C);
+  }
+
+  .zev-filterbar__right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font: 400 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-filterbar__sort { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+  .zev-filterbar__sort select {
+    border: 0;
+    background: transparent;
+    font: 500 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-ink, #1C1C1C);
+    cursor: pointer;
+    min-height: 44px;
+  }
+
+  /* ---------- grid ---------- */
+  .zev-coll__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    padding: 44px var(--zev-gutter, 56px);
+  }
+  .zev-coll__empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    font: 400 15px/1.7 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-body-soft, #5A5654);
+  }
+
+  /* ---------- pagination ---------- */
+  .zev-coll__more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 20px var(--zev-gutter, 56px) 80px;
+  }
+  .zev-rail { width: 220px; height: 1px; background: var(--zev-line, #E6E2DA); }
+  .zev-rail__fill { display: block; height: 1px; background: var(--zev-ink, #1C1C1C); }
+  .zev-coll__showing {
+    margin: 0;
+    font: 400 12px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-coll__loadmore {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 16px 34px;
+    border: 1px solid var(--zev-ink, #1C1C1C);
+    border-radius: var(--zev-radius, 0);
+    font: 500 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--zev-ink, #1C1C1C);
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .zev-coll__loadmore:hover { background: var(--zev-ink, #1C1C1C); color: var(--zev-on-dark, #F8F8F6); }
+
+  /* ---------- tablet ---------- */
+  @media (max-width: 989px) {
+    .zev-coll__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 749px) {
+    .zev-filterbar { padding: 12px var(--zev-gutter, 20px); }
+    .zev-filterbar__toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 44px;
+      padding: 13px 16px;
+      border: 1px solid var(--zev-line-field, #DCD8D0);
+      border-radius: var(--zev-radius, 0);
+      background: transparent;
+      font: 500 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+      letter-spacing: .06em;
+      color: var(--zev-ink, #1C1C1C);
+    }
+    .zev-filterbar__panel {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0;
+      background: var(--zev-ivory, #F8F8F6);
+      overflow-y: auto;
+    }
+    .zev-filterbar__panel.is-open { display: flex; }
+    .zev-filterbar__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px var(--zev-gutter, 20px);
+      border-bottom: 1px solid var(--zev-line, #E6E2DA);
+    }
+    .zev-filterbar__headtitle {
+      font: 500 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--zev-ink, #1C1C1C);
+    }
+    .zev-filterbar__close {
+      min-width: 44px;
+      min-height: 44px;
+      border: 0;
+      background: none;
+      font-size: 24px;
+      line-height: 1;
+      color: var(--zev-ink, #1C1C1C);
+      cursor: pointer;
+    }
+    .zev-filterbar__pills {
+      flex-direction: column;
+      gap: 0;
+      padding: 0 var(--zev-gutter, 20px);
+    }
+    .zev-filter { border-bottom: 1px solid var(--zev-line, #E6E2DA); }
+    .zev-filter__pill { border: 0; padding: 0; min-height: 52px; width: 100%; }
+    .zev-filter__caret { margin-left: auto; }
+    .zev-filter__panel {
+      position: static;
+      min-width: 0;
+      max-height: none;
+      border: 0;
+      padding: 0 0 12px;
+    }
+    .zev-filterbar__right {
+      order: 3;
+      padding: 12px var(--zev-gutter, 20px);
+      border-top: 1px solid var(--zev-line, #E6E2DA);
+    }
+    .zev-filterbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: auto;
+      padding: 14px var(--zev-gutter, 20px);
+      border-top: 1px solid var(--zev-line, #E6E2DA);
+      background: var(--zev-ivory, #F8F8F6);
+      position: sticky;
+      bottom: 0;
+    }
+    .zev-filterbar__clear {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font: 400 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+      color: var(--zev-taupe, #A8999C);
+      text-decoration: none;
+    }
+    .zev-filterbar__apply {
+      flex: 1;
+      min-height: 44px;
+      padding: 15px 0;
+      border: 0;
+      border-radius: var(--zev-radius, 0);
+      background: var(--zev-emerald, #0F6452);
+      color: #fff;
+      font: 500 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .zev-coll__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 20px var(--zev-gutter, 20px);
+    }
+    .zev-coll__more { padding: 12px var(--zev-gutter, 20px) 48px; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Collection grid — Zevaraz",
+  "tag": "section",
+  "class": "zev-coll-section",
+  "settings": [
+    {
+      "id": "products_per_page",
+      "type": "range",
+      "label": "Products per page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    },
+    { "id": "show_filters", "type": "checkbox", "label": "Show filters", "default": true },
+    { "id": "show_sorting", "type": "checkbox", "label": "Show sorting", "default": true }
+  ],
+  "enabled_on": { "templates": ["collection"] }
+}
+{% endschema %}
