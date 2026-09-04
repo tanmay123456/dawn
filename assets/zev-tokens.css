@@ -1,0 +1,909 @@
+/* Zevaraz design tokens — direction 1a, "Ivory Editorial"
+   Load before all other stylesheets. Every other rule references these. */
+
+:root {
+  /* Surfaces */
+  --zev-ivory:        #F8F8F6;
+  --zev-stone:        #F1EEE8;
+  --zev-graphite:     #1C1C1C;
+  --zev-graphite-alt: #141414;
+
+  /* Accents */
+  --zev-emerald:       #0F6452;
+  --zev-emerald-hover: #0C5343;
+  --zev-silver:        #C0C0C0;
+  --zev-taupe:         #A8999C;
+
+  /* Text */
+  --zev-ink:       #1C1C1C;
+  --zev-body:      #3F3B39;
+  --zev-body-soft: #5A5654;
+  --zev-quiet:     #6B6764;
+  --zev-on-dark:      #F8F8F6;
+  --zev-on-dark-soft: #D8D4CC;
+
+  /* Hairlines — this design separates with lines, never shadows */
+  --zev-line:       #E6E2DA;
+  --zev-line-stone: #E0DCD4;
+  --zev-line-dark:  #2C2C2C;
+  --zev-line-field: #DCD8D0;
+
+  /* Type */
+  --zev-font-display: 'Playfair Display', Georgia, serif;
+  --zev-font-text:    'Montserrat', system-ui, sans-serif;
+
+  --zev-hero:      62px;
+  --zev-h2:        40px;
+  --zev-h3:        38px;
+  --zev-h4:        30px;
+  --zev-body-size: 16px;
+  --zev-small:     13px;
+  --zev-eyebrow:   11px;
+
+  --zev-track-eyebrow: .32em;
+  --zev-track-label:   .24em;
+  --zev-track-button:  .16em;
+  --zev-track-mark:    .34em;
+
+  /* Space */
+  --zev-gutter:      56px;
+  --zev-section:     88px;
+  --zev-grid-gap:    22px;
+  --zev-card-pad:    22px;
+
+  /* Shape — deliberately zero. Do not raise these. */
+  --zev-radius: 0;
+  --zev-shadow: none;
+}
+
+@media (max-width: 749px) {
+  :root {
+    --zev-hero:      34px;
+    --zev-h2:        27px;
+    --zev-h3:        25px;
+    --zev-h4:        24px;
+    --zev-body-size: 15px;
+    --zev-gutter:    20px;
+    --zev-section:   36px;
+    --zev-grid-gap:  14px;
+    --zev-card-pad:  14px;
+  }
+}
+
+/* Primitives */
+
+.zev-eyebrow {
+  font: 500 var(--zev-eyebrow)/1 var(--zev-font-text);
+  letter-spacing: var(--zev-track-eyebrow);
+  text-transform: uppercase;
+  color: var(--zev-emerald);
+  margin: 0;
+}
+
+.zev-h2 {
+  font: 600 var(--zev-h2)/1.12 var(--zev-font-display);
+  color: var(--zev-ink);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.zev-body {
+  font: 400 var(--zev-body-size)/1.7 var(--zev-font-text);
+  color: var(--zev-body);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.zev-btn,
+.zev-btn--ghost {
+  display: inline-block;
+  padding: 17px 34px;
+  font: 500 14px/1 var(--zev-font-text);
+  letter-spacing: var(--zev-track-button);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--zev-radius);
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.zev-btn {
+  background: var(--zev-emerald);
+  color: #fff;
+  border: 0;
+}
+.zev-btn:hover { background: var(--zev-emerald-hover); }
+
+.zev-btn--ghost {
+  background: transparent;
+  color: var(--zev-ink);
+  border: 1px solid var(--zev-ink);
+}
+.zev-btn--ghost:hover { background: var(--zev-ink); color: var(--zev-on-dark); }
+
+/* Minimum tap target on touch devices */
+@media (hover: none) {
+  .zev-btn, .zev-btn--ghost { min-height: 44px; }
+}
+
+.zev-link-rule {
+  font: 500 13px/1 var(--zev-font-text);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--zev-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--zev-silver);
+  padding-bottom: 5px;
+  transition: border-color .15s ease;
+}
+.zev-link-rule:hover { border-color: var(--zev-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ==========================================================================
+   Dawn overlay
+   Everything below bends the host theme onto the Ivory Editorial rules.
+   Dawn sets html { font-size: 62.5% }, so 1rem = 10px in these selectors.
+   ========================================================================== */
+
+/* --- Shape. Radius 0 and no shadows, at the root of the theme's own vars. --- */
+:root,
+.color-scheme-1, .color-scheme-2, .color-scheme-3, .color-scheme-4, .color-scheme-5 {
+  --border-radius: 0px;
+  --buttons-radius: 0px;
+  --buttons-radius-outset: 0px;
+  --inputs-radius: 0px;
+  --inputs-radius-outset: 0px;
+  --variant-pills-radius: 0px;
+  --badge-corner-radius: 0px;
+  --popup-corner-radius: 0px;
+  --text-boxes-radius: 0px;
+  --media-radius: 0px;
+  --card-corner-radius: 0px;
+  --collection-card-corner-radius: 0px;
+  --blog-card-corner-radius: 0px;
+  --duration-default: .15s;
+}
+
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+.card,
+.card-wrapper,
+.card__inner,
+.card__content,
+.media,
+.global-media-settings,
+.quantity,
+.field__input,
+.select,
+.button,
+.shopify-payment-button__button,
+.cart-drawer,
+.menu-drawer,
+.product-form__input input[type='radio'] + label {
+  box-shadow: none !important;
+}
+
+/* Dawn paints card and media borders from the foreground colour at an opacity.
+   This design wants a warm hairline instead, on every surface. */
+.card__inner,
+.card--standard .card__inner,
+.global-media-settings,
+.global-media-settings img,
+.media--hover-effect,
+.quantity,
+.field__input,
+.select__select,
+.collapsible-content__grid,
+.cart-item,
+.product-form__input .select__select {
+  border-color: var(--zev-line) !important;
+}
+
+.color-scheme-2 .card__inner,
+.color-scheme-2 .global-media-settings { border-color: var(--zev-line-stone) !important; }
+
+.color-scheme-3 .card__inner,
+.color-scheme-3 .global-media-settings,
+.color-scheme-4 .card__inner { border-color: var(--zev-line-dark) !important; }
+
+/* --- Layout. Edge to edge, not boxed in a 1200px container. --- */
+.page-width,
+.page-width--narrow,
+.header,
+.footer__content-top,
+.footer__content-bottom {
+  max-width: none;
+  padding-left: var(--zev-gutter);
+  padding-right: var(--zev-gutter);
+}
+
+.shopify-section { --zev-pad: var(--zev-section); }
+
+/* --- Type. Sizes come from the README table, not from Dawn's scale. --- */
+body {
+  font-family: var(--zev-font-text);
+  font-size: var(--zev-body-size);
+  line-height: 1.7;
+  color: var(--zev-body);
+  background: var(--zev-ivory);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h0, .h1, .h2, .h3, .h4, .h5,
+.card__heading,
+.product__title,
+.cart-drawer__heading {
+  font-family: var(--zev-font-display);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+
+h1, .h1 { font-size: var(--zev-h2); line-height: 1.12; }
+h2, .h2 { font-size: var(--zev-h3); line-height: 1.14; }
+h3, .h3 { font-size: var(--zev-h4); line-height: 1.2; }
+
+/* Product titles on cards are Playfair *regular*. Bold is wrong here. */
+.card__heading,
+.card__heading a,
+.card-information .card__heading {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.product__title,
+.product__title h1 { font-size: 38px; line-height: 1.14; }
+
+/* The single most common way this design gets broken. Prices are never serif. */
+.price,
+.price *,
+.price__container,
+.price-item,
+.cart-item__price-wrapper *,
+.totals *,
+.product__price,
+.card__price {
+  font-family: var(--zev-font-text) !important;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.price { font-size: 16px; }
+.product__info-wrapper .price,
+.price--large .price-item { font-size: 30px; }
+
+/* Nothing on this site is smaller than 12px. */
+.caption, .caption-large, .caption-with-letter-spacing, small { font-size: 12px; }
+
+.button,
+.shopify-payment-button__button--unbranded,
+.cart__checkout-button {
+  font-family: var(--zev-font-text);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: var(--zev-track-button);
+  text-transform: uppercase;
+  min-height: 44px;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+/* --- The 0.00 bug. A compare-at price of zero is not a discount. --- */
+.price--on-sale .price-item--regular:not([data-zev-real]) { }
+s.price-item--regular:empty,
+s.price-item--regular:has(+ :empty) { display: none; }
+
+/* --- Tap targets. 44px minimum, everywhere, including steppers and chips. --- */
+.quantity__button,
+.quantity__input,
+.facets__label,
+.menu-drawer__menu-item,
+.list-menu__item--link,
+.mobile-facets__label {
+  min-height: 44px;
+}
+
+/* --- Motion. Cards do not lift and cast nothing; the image alone moves. --- */
+.card-wrapper:hover .card__inner,
+.card:hover { transform: none !important; }
+
+.card__media img,
+.media--hover-effect > img {
+  transition: transform .5s ease-out, opacity .3s ease;
+}
+.card-wrapper:hover .card__media img:first-child { transform: scale(1.03); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card__media img { transition: none; }
+}
+
+/* --- Section rhythm --- */
+.shopify-section + .shopify-section { margin-top: 0; }
+
+@media (max-width: 749px) {
+  .card__heading, .card__heading a { font-size: 16px; }
+  .product__title, .product__title h1 { font-size: 30px; }
+  .price { font-size: 15px; }
+  .product__info-wrapper .price,
+  .price--large .price-item { font-size: 26px; }
+}
+
+/* ==========================================================================
+   Collection page — Dawn's native grid and facets, dressed to spec
+   ========================================================================== */
+
+.zev-chead-section + .shopify-section .facets-container,
+#main-collection-filters {
+  border-top: 1px solid var(--zev-line);
+  border-bottom: 1px solid var(--zev-line);
+  padding: 18px var(--zev-gutter);
+  background: var(--zev-ivory);
+}
+
+/* Filter pills */
+.facets__summary,
+.mobile-facets__open,
+.facet-filters__sort,
+.facets__disclosure .facets__summary {
+  border: 1px solid var(--zev-line-field);
+  padding: 11px 16px;
+  font: 400 12px/1 var(--zev-font-text);
+  letter-spacing: .04em;
+  color: var(--zev-taupe);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.facets__summary .facets__summary-label,
+.facets__summary span:last-of-type { color: var(--zev-ink); font-weight: 500; }
+.facets__summary svg, .facet-filters__sort + svg { width: 9px; color: var(--zev-taupe); }
+
+.facets__display, .facets__display-vertical {
+  border: 1px solid var(--zev-line);
+  box-shadow: none;
+}
+.facets__price .field__input { border-color: var(--zev-line-field); }
+.active-facets__button, .facets__label { min-height: 44px; }
+
+.product-count__text, .facet-filters__label {
+  font: 400 13px/1 var(--zev-font-text);
+  color: var(--zev-taupe);
+}
+
+/* Grid */
+.collection .product-grid,
+.collection product-grid .grid {
+  padding: 44px var(--zev-gutter);
+  gap: 26px;
+}
+.collection .product-grid .grid__item { max-width: none; }
+
+/* The 925 · BIS chip on every card image, including Dawn's own card */
+.card__media,
+.card--standard > .card__inner { position: relative; }
+.card-wrapper .card__inner::after {
+  content: '925 · BIS';
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  padding: 7px 11px;
+  background: rgba(248, 248, 246, .94);
+  font: 400 10px/1 var(--zev-font-text);
+  letter-spacing: .1em;
+  color: var(--zev-quiet);
+  pointer-events: none;
+}
+
+/* Card meta row: title and subtitle left, price right, baselines aligned */
+.card-information {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: var(--zev-card-pad);
+}
+.card-information > .card__information-volume-pricing-note { display: none; }
+.card-information .price { white-space: nowrap; }
+
+/* Badges only ever render with a value — Dawn already guards this, but the
+   compare-at-zero bug slips through as an empty struck-through price. */
+.price__sale .price-item--regular:empty,
+.card__badge span:empty,
+.badge:empty { display: none !important; }
+
+/* Pagination: a progress rail, a count, then Load more */
+.pagination-wrapper {
+  padding: 20px var(--zev-gutter) 80px;
+  margin-top: 0;
+}
+.pagination__list {
+  gap: 6px;
+  font-family: var(--zev-font-text);
+}
+.pagination__item {
+  border: 1px solid transparent;
+  font-size: 12px;
+  color: var(--zev-taupe);
+  min-height: 44px;
+  min-width: 44px;
+}
+.pagination__item--current { color: var(--zev-ink); border-color: var(--zev-ink); }
+
+@media (max-width: 989px) {
+  .collection .product-grid,
+  .collection product-grid .grid { gap: 16px; }
+}
+@media (max-width: 749px) {
+  #main-collection-filters { padding: 12px var(--zev-gutter); }
+  .collection .product-grid,
+  .collection product-grid .grid { padding: 20px var(--zev-gutter); gap: 16px; }
+  .card-information { padding: 14px; gap: 10px; }
+  .card-wrapper .card__inner::after { right: 8px; bottom: 8px; padding: 5px 8px; font-size: 9px; }
+}
+
+/* ==========================================================================
+   Product page
+   Two columns, 1.25fr / 1fr, divided by a hairline. Buy box order is set in
+   templates/product.json and must not be rearranged.
+   ========================================================================== */
+
+.product {
+  gap: 0;
+  align-items: stretch;
+}
+.product--large > .product__media-wrapper { max-width: 56%; width: 56%; }
+.product--large > .product__info-wrapper  { max-width: 44%; width: 44%; }
+
+.product__media-wrapper {
+  padding: 44px 40px 60px var(--zev-gutter);
+  border-right: 1px solid var(--zev-line);
+}
+.product__info-wrapper {
+  padding: 56px var(--zev-gutter) 60px 44px;
+}
+.product__info-container > * + * { margin-top: 22px; }
+.product__info-container > *:first-child { margin-top: 0; }
+
+.product__media-item .media,
+.product__media-item img,
+.thumbnail { border: 1px solid var(--zev-line); background: #fff; }
+.thumbnail-list { gap: 12px; }
+.thumbnail-list__item { width: 88px; height: 88px; }
+
+/* Buy box typography */
+.zev-pdp__eyebrow {
+  margin: 0;
+  font: 500 11px/1 var(--zev-font-text);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--zev-emerald);
+}
+.zev-pdp__material {
+  margin: 0;
+  font: 400 14px/1.6 var(--zev-font-text);
+  color: var(--zev-quiet);
+}
+.product__info-container .product__description {
+  font: 400 15px/1.75 var(--zev-font-text);
+  color: var(--zev-body-soft);
+}
+
+/* "Inclusive of all taxes" sits beside the price, on its baseline */
+.product__tax, .product__info-container .tax-note {
+  display: inline;
+  margin-left: 14px;
+  font: 400 13px/1 var(--zev-font-text);
+  color: var(--zev-taupe);
+}
+.price--large { display: inline-flex; align-items: baseline; }
+
+/* Variant swatches */
+.product-form__input--pill input[type='radio'] + label {
+  border: 1px solid var(--zev-line-field);
+  padding: 13px 20px;
+  font: 500 13px/1 var(--zev-font-text);
+  color: var(--zev-quiet);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.product-form__input--pill input[type='radio']:checked + label {
+  border-color: var(--zev-ink);
+  color: var(--zev-ink);
+  background: transparent;
+}
+/* Sold out variants stay visible and struck through, never hidden. */
+.product-form__input--pill input[type='radio'].disabled + label,
+.product-form__input--pill input[type='radio']:disabled + label {
+  color: var(--zev-taupe);
+  text-decoration: line-through;
+  pointer-events: none;
+}
+.product-form__input .form__label {
+  font: 500 12px/1 var(--zev-font-text);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--zev-ink);
+  margin-bottom: 10px;
+}
+
+/* Quantity + Add to cart */
+.zev-buy__row { display: flex; gap: 12px; align-items: stretch; }
+.zev-qty {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 18px;
+  border: 1px solid var(--zev-line-field);
+  min-height: 44px;
+}
+.zev-qty__btn {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font: 400 16px/1 var(--zev-font-text);
+  color: var(--zev-ink);
+  min-width: 20px;
+  min-height: 44px;
+}
+.zev-qty__input {
+  width: 28px;
+  border: 0;
+  background: none;
+  text-align: center;
+  font: 500 14px/1 var(--zev-font-text);
+  color: var(--zev-ink);
+  -moz-appearance: textfield;
+}
+.zev-qty__input::-webkit-outer-spin-button,
+.zev-qty__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.zev-buy__add {
+  flex: 1;
+  padding: 20px 0;
+  border: 0;
+  background: var(--zev-emerald);
+  color: #fff;
+  font: 500 14px/1 var(--zev-font-text);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color .15s ease;
+}
+.zev-buy__add:hover:not([disabled]) { background: var(--zev-emerald-hover); }
+.zev-buy__add[disabled] { background: var(--zev-taupe); cursor: not-allowed; }
+
+.zev-buy__dynamic { margin-top: 12px; }
+.zev-buy__dynamic .shopify-payment-button__button--unbranded {
+  width: 100%;
+  padding: 19px 0;
+  background: transparent;
+  border: 1px solid var(--zev-ink);
+  color: var(--zev-ink);
+  font: 500 14px/1 var(--zev-font-text);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.zev-buy__dynamic .shopify-payment-button__button--unbranded:hover {
+  background: var(--zev-ink);
+  color: var(--zev-on-dark);
+}
+
+/* WhatsApp line */
+.zev-pdp__whatsapp { margin: 0; text-align: center; }
+.zev-pdp__whatsapp a {
+  font: 400 13px/1.6 var(--zev-font-text);
+  color: var(--zev-taupe);
+  text-decoration: none;
+}
+.zev-pdp__whatsapp a:hover { color: var(--zev-ink); }
+
+/* Accordion */
+.zev-acc__row { border-bottom: 1px solid var(--zev-line); }
+.zev-acc__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 19px 0;
+  cursor: pointer;
+  list-style: none;
+  font: 500 14px/1 var(--zev-font-text);
+  color: var(--zev-ink);
+  min-height: 44px;
+}
+.zev-acc__label::-webkit-details-marker { display: none; }
+.zev-acc__mark {
+  color: var(--zev-taupe);
+  font-size: 18px;
+  transition: transform .25s ease;
+}
+.zev-acc__row[open] .zev-acc__mark { transform: rotate(45deg); }
+.zev-acc__body {
+  padding: 0 0 19px;
+  font: 400 14px/1.7 var(--zev-font-text);
+  color: var(--zev-body-soft);
+}
+.zev-acc__body p { margin: 0 0 8px; }
+.zev-acc__body p:last-child { margin-bottom: 0; }
+
+/* Delivery panel */
+.zev-delivery {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 22px;
+  background: var(--zev-stone);
+}
+.zev-delivery__line {
+  margin: 0;
+  font: 500 13px/1.4 var(--zev-font-text);
+  color: var(--zev-ink);
+}
+.zev-delivery__note {
+  margin: 0;
+  font: 400 12px/1.6 var(--zev-font-text);
+  color: var(--zev-quiet);
+}
+
+@media (max-width: 989px) {
+  .product--large > .product__media-wrapper,
+  .product--large > .product__info-wrapper { max-width: 100%; width: 100%; }
+  .product__media-wrapper {
+    border-right: 0;
+    border-bottom: 1px solid var(--zev-line);
+    padding: 0 0 20px;
+  }
+  .product__info-wrapper { padding: 28px var(--zev-gutter) 40px; }
+}
+@media (max-width: 749px) {
+  .zev-buy__add { padding: 18px 0; }
+}
+
+/* ==========================================================================
+   Cart drawer
+   ========================================================================== */
+
+.cart-drawer .drawer__inner { background: var(--zev-ivory); border-left: 1px solid var(--zev-line); }
+.cart-drawer__overlay { background: rgba(28, 28, 28, .55); }
+
+.drawer__header {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--zev-line);
+  margin: 0;
+}
+.drawer__heading {
+  font: 600 22px/1.2 var(--zev-font-display);
+  color: var(--zev-ink);
+  margin: 0;
+}
+.drawer__close { color: var(--zev-taupe); }
+
+.zev-cartprog {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 22px;
+  background: var(--zev-stone);
+}
+.zev-cartprog__label {
+  margin: 0;
+  font: 500 12px/1 var(--zev-font-text);
+  color: var(--zev-emerald);
+}
+.zev-cartprog__rail { height: 3px; background: var(--zev-line-field); }
+.zev-cartprog__fill {
+  display: block;
+  height: 100%;
+  background: var(--zev-emerald);
+  transition: width .3s ease;
+}
+
+.cart-drawer .cart-item {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--zev-line);
+  gap: 14px;
+}
+.cart-drawer .cart-item__image { width: 84px; height: 84px; object-fit: cover; border: 1px solid var(--zev-line); background: #fff; }
+.cart-drawer .cart-item__name {
+  font: 400 16px/1.35 var(--zev-font-display);
+  color: var(--zev-ink);
+  text-decoration: none;
+}
+.cart-drawer .product-option {
+  font: 400 11px/1.5 var(--zev-font-text);
+  color: var(--zev-taupe);
+}
+.cart-drawer .quantity {
+  border: 1px solid var(--zev-line-field);
+  min-height: 44px;
+  width: auto;
+  padding: 0 4px;
+}
+.cart-drawer .quantity__button { min-width: 40px; min-height: 44px; }
+.cart-drawer .cart-item__price-wrapper .price { font: 500 15px/1 var(--zev-font-text); }
+
+.cart-drawer .totals { padding: 0; }
+.cart-drawer__footer { padding: 18px 22px; border-top: 1px solid var(--zev-line); }
+.cart-drawer .totals__total { font: 600 17px/1 var(--zev-font-text); color: var(--zev-ink); }
+.cart-drawer .totals__total-value { font: 600 17px/1 var(--zev-font-text); color: var(--zev-ink); }
+.cart-drawer .tax-note { font: 400 12px/1.5 var(--zev-font-text); color: var(--zev-quiet); }
+
+.cart-drawer .cart__ctas { padding: 0 22px 26px; }
+.cart-drawer .cart__checkout-button {
+  width: 100%;
+  padding: 19px 0;
+  background: var(--zev-emerald);
+  color: #fff;
+  border: 0;
+}
+.cart-drawer .cart__checkout-button:hover:not([disabled]) { background: var(--zev-emerald-hover); }
+
+.zev-carttrust {
+  margin: 12px 0 0;
+  text-align: center;
+  font: 400 11px/1.6 var(--zev-font-text);
+  color: var(--zev-taupe);
+}
+
+@media (max-width: 749px) {
+  /* Bottom sheet on mobile */
+  .cart-drawer .drawer__inner {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    max-height: 88vh;
+    border-left: 0;
+    border-top: 1px solid var(--zev-line);
+  }
+}
+
+/* ==========================================================================
+   Header and mobile drawer
+   ========================================================================== */
+
+.header-wrapper { border-bottom: 1px solid var(--zev-line); }
+.header {
+  padding: 22px var(--zev-gutter);
+  border-bottom: 0;
+}
+.header__heading-link { padding: 0; }
+.header__menu-item {
+  font: 500 14px/1 var(--zev-font-text);
+  letter-spacing: 0;
+  color: var(--zev-ink);
+  padding: 0;
+}
+.header__inline-menu .list-menu--inline { gap: 34px; }
+.header__menu-item:hover span,
+.header__active-menu-item {
+  text-decoration: none;
+  border-bottom: 1px solid var(--zev-ink);
+  padding-bottom: 4px;
+}
+.header__icons .header__icon,
+.header__icon--cart { font: 400 13px/1 var(--zev-font-text); color: var(--zev-ink); }
+.cart-count-bubble {
+  background: var(--zev-emerald);
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  font: 600 11px/20px var(--zev-font-text);
+  border-radius: 50% !important;
+}
+
+@media (max-width: 989px) {
+  .header { padding: 16px var(--zev-gutter); }
+}
+
+/* Mobile drawer — full-screen graphite panel */
+.zev-drawer.menu-drawer {
+  background: var(--zev-graphite);
+  color: var(--zev-on-dark);
+  width: 100%;
+  max-width: 100%;
+  border-right: 0;
+}
+.zev-drawer .menu-drawer__inner-container,
+.zev-drawer .menu-drawer__navigation-container { background: var(--zev-graphite); }
+.zev-drawer__nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 0;
+}
+.zev-drawer__eyebrow {
+  margin: 0;
+  padding: 22px 20px 10px;
+  font: 500 10px/1 var(--zev-font-text);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--zev-emerald);
+}
+.zev-drawer__collections { margin: 0; padding: 0; }
+.zev-drawer__crow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--zev-line-dark);
+  text-decoration: none;
+  min-height: 44px;
+}
+.zev-drawer__cthumb {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  background: var(--zev-graphite-alt);
+  overflow: hidden;
+}
+.zev-drawer__cthumb img { width: 100%; height: 100%; object-fit: cover; }
+.zev-drawer__ctext { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.zev-drawer__cname {
+  font: 600 22px/1.15 var(--zev-font-display);
+  color: var(--zev-on-dark);
+}
+.zev-drawer__ctag {
+  font: 400 10px/1 var(--zev-font-text);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--zev-taupe);
+}
+.zev-drawer__carrow { color: var(--zev-quiet); font-size: 16px; }
+
+.zev-drawer__cats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  background: var(--zev-line-dark);
+  border-top: 1px solid var(--zev-line-dark);
+  border-bottom: 1px solid var(--zev-line-dark);
+}
+.zev-drawer__cat {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--zev-graphite);
+  font: 400 15px/1 var(--zev-font-text);
+  color: var(--zev-on-dark);
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.zev-drawer__foot {
+  margin-top: auto;
+  padding: 22px 20px 26px;
+  border-top: 1px solid var(--zev-line-dark);
+}
+.zev-drawer__wa {
+  display: block;
+  width: 100%;
+  padding: 17px 0;
+  text-align: center;
+  background: var(--zev-emerald);
+  color: #fff;
+  font: 500 14px/1 var(--zev-font-text);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  min-height: 44px;
+}
+.zev-drawer__secondary {
+  margin: 14px 0 0;
+  text-align: center;
+  font: 400 12px/1.9 var(--zev-font-text);
+  color: var(--zev-taupe);
+}
+.zev-drawer__secondary a { color: inherit; text-decoration: none; }
