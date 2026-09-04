@@ -35,7 +35,6 @@
   padding: 0;
   text-align: right;
 }
-}
 .card-wrapper .card-information .price { white-space: nowrap; }
 .card-wrapper .card-information .caption-large:empty { display: none; }
 
@@ -73,19 +72,66 @@
 
 @media (max-width: 749px) {
   .card-wrapper .card > .card__content > .card__information { padding: 14px; gap: 10px; }
+
+  /* ------------------------------------------------------------------
+     Mobile legibility floor: nothing on a phone is set below 12px.
+     These selectors are one level more specific than the rules they
+     override, so they win wherever a section's own inline <style> sets
+     a smaller size. Everything here is a label or a chip, never body copy.
+     ------------------------------------------------------------------ */
   .card-wrapper .card__media::after {
     right: 8px;
     bottom: 8px;
     padding: 5px 8px;
-    font-size: 9px;
-  }
-
-  /* The two remaining claims have to hold one line at 375px. */
-  .zev-ann__row {
-    flex-wrap: nowrap;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: .06em;
-    gap: 6px;
+  }
+  .zev-card .zev-card__hallmark { font-size: 12px; padding: 6px 9px; letter-spacing: .06em; }
+  .zev-card .zev-card__badge    { font-size: 12px; padding: 6px 9px; letter-spacing: .08em; }
+  .zev-chips .zev-chips__item   { font-size: 12px; padding: 10px 12px; }
+  .zev-pdp .zev-pdp__eyebrow    { font-size: 12px; letter-spacing: .22em; }
+  .zev-chead .zev-chead__tag    { font-size: 12px; letter-spacing: .18em; }
+  .zev-foot .zev-foot__head     { font-size: 12px; letter-spacing: .2em; }
+  .cart-drawer .cart__ctas::after { font-size: 12px; }
+
+  /* The announcement bar holds two claims. At 12px they no longer fit one
+     line on a 360px phone, so it wraps and centres rather than shrinking
+     below the legibility floor. */
+  .zev-ann__row {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: .06em;
+    gap: 4px 10px;
   }
   .zev-ann__item { white-space: nowrap; }
+
+  /* Mobile tap targets. Anything a thumb has to hit is at least 44px tall,
+     including breadcrumbs, inline text links and the quantity readout. */
+  [class].zev-pdp__crumbs a,
+  [class].zev-chead__crumbs a,
+  [class].zev-nav-collections__all,
+  [class].zev-band__link,
+  [class].zev-ig__handle,
+  .zev-pdp .zev-pdp__whatsapp a,
+  .zev-foot .zev-foot__rich a,
+  .header__heading-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .zev-qty .zev-qty__input { min-height: 44px; }
+
+  /* Homepage labels also sit on the 12px floor. Set here rather than in the
+     approved homepage sections, so those files stay exactly as signed off. */
+  [class].zev-hero__eyebrow { font-size: 12px; letter-spacing: .22em; }
+  [class].zev-trust__title { font-size: 12px; }
+  [class].zev-nav-collections__eyebrow { font-size: 12px; letter-spacing: .22em; }
+  [class].zev-nav-card__number { font-size: 12px; }
+  [class].zev-nav-card__tag { font-size: 12px; letter-spacing: .16em; }
+  [class].zev-ig__handle { font-size: 12px; }
+  [class].zev-hallmark__eyebrow { font-size: 12px; letter-spacing: .22em; }
+  [class].zev-hallmark__stamp { font-size: 12px; letter-spacing: .08em; }
+  [class].zev-band__eyebrow { font-size: 12px; letter-spacing: .22em; }
 }
