@@ -1,0 +1,301 @@
+{%- comment -%}
+  Zevaraz — Footer (README section 1.10)
+
+  Replaces Dawn's footer on every template. Deliberately absent, because Dawn
+  renders them by default and the design does not have them:
+    · "Powered by Shopify"
+    · the stock / policy bullet list
+    · the payment-provider icon row
+
+  Everything visible here is a section setting or a block, so it is editable in
+  the theme editor without touching code.
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+<div class="zev-foot">
+  <div class="zev-foot__cols">
+
+    <div class="zev-foot__brand">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo
+           | image_url: width: 480
+           | image_tag: loading: 'lazy', widths: '160,240,320,480', class: 'zev-foot__logo', alt: shop.name }}
+      {%- else -%}
+        <p class="zev-foot__wordmark">{{ section.settings.wordmark | default: 'ZEVARAZ' }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.brand_line != blank -%}
+        <p class="zev-foot__line">{{ section.settings.brand_line }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      <div class="zev-foot__col" {{ block.shopify_attributes }}>
+        {%- if block.settings.heading != blank -%}
+          <p class="zev-foot__head">{{ block.settings.heading }}</p>
+        {%- endif -%}
+
+        {%- case block.type -%}
+
+          {%- when 'menu' -%}
+            {%- if block.settings.menu != blank -%}
+              <ul class="zev-foot__list">
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+          {%- when 'text' -%}
+            {%- if block.settings.body != blank -%}
+              <div class="zev-foot__rich">{{ block.settings.body }}</div>
+            {%- endif -%}
+
+          {%- when 'contact' -%}
+            <ul class="zev-foot__list">
+              {%- if block.settings.whatsapp_number != blank -%}
+                <li>
+                  <a href="https://wa.me/{{ block.settings.whatsapp_number | remove: ' ' | remove: '+' | remove: '-' }}"
+                     target="_blank" rel="noopener">
+                    {{ block.settings.whatsapp_label | default: 'WhatsApp' }}
+                  </a>
+                </li>
+              {%- endif -%}
+              {%- if block.settings.email != blank -%}
+                <li><a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a></li>
+              {%- endif -%}
+              {%- if block.settings.hours != blank -%}
+                <li class="zev-foot__plain">{{ block.settings.hours }}</li>
+              {%- endif -%}
+            </ul>
+
+            {%- if block.settings.show_newsletter -%}
+              {%- form 'customer', class: 'zev-foot__news' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <label class="visually-hidden" for="zev-news-{{ block.id }}">Email</label>
+                <input
+                  class="zev-foot__newsinput"
+                  id="zev-news-{{ block.id }}"
+                  type="email"
+                  name="contact[email]"
+                  placeholder="{{ block.settings.newsletter_placeholder | default: 'Your email' }}"
+                  autocomplete="email"
+                  required
+                >
+                <button class="zev-foot__newsbtn" type="submit">{{ block.settings.newsletter_button | default: 'Join' }}</button>
+                {%- if form.posted_successfully? -%}
+                  <p class="zev-foot__newsnote">Thank you — you are on the list.</p>
+                {%- endif -%}
+              {%- endform -%}
+            {%- endif -%}
+
+        {%- endcase -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="zev-foot__legal">
+    <p class="zev-foot__copy">{{ section.settings.copyright }}</p>
+
+    <ul class="zev-foot__policies">
+      {%- if shop.privacy_policy -%}<li><a href="{{ shop.privacy_policy.url }}">Privacy</a></li>{%- endif -%}
+      {%- if shop.refund_policy -%}<li><a href="{{ shop.refund_policy.url }}">Refunds</a></li>{%- endif -%}
+      {%- if shop.shipping_policy -%}<li><a href="{{ shop.shipping_policy.url }}">Shipping</a></li>{%- endif -%}
+      {%- if shop.terms_of_service -%}<li><a href="{{ shop.terms_of_service.url }}">Terms</a></li>{%- endif -%}
+    </ul>
+  </div>
+</div>
+
+{%- style -%}
+  .zev-foot {
+    padding: 70px var(--zev-gutter, 56px) 30px;
+    background: var(--zev-graphite, #1C1C1C);
+    color: var(--zev-on-dark, #F8F8F6);
+  }
+  .zev-foot__cols {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 44px;
+    padding-bottom: 56px;
+  }
+  .zev-foot__logo { max-width: 160px; height: auto; display: block; }
+  .zev-foot__wordmark {
+    margin: 0;
+    font: 500 18px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: var(--zev-track-mark, .34em);
+    color: var(--zev-on-dark, #F8F8F6);
+  }
+  .zev-foot__line {
+    margin: 16px 0 0;
+    max-width: 290px;
+    font: 400 13px/1.7 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-foot__head {
+    margin: 0 0 16px;
+    font: 500 11px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--zev-on-dark, #F8F8F6);
+  }
+  .zev-foot__list { margin: 0; padding: 0; list-style: none; }
+  .zev-foot__list li { margin-bottom: 4px; }
+  .zev-foot__list a,
+  .zev-foot__plain {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font: 400 13px/1.6 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+    text-decoration: none;
+  }
+  .zev-foot__list a:hover { color: var(--zev-on-dark, #F8F8F6); }
+  .zev-foot__rich {
+    font: 400 13px/1.9 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-foot__rich p { margin: 0; }
+  .zev-foot__rich a { color: inherit; text-decoration: none; }
+  .zev-foot__rich a:hover { color: var(--zev-on-dark, #F8F8F6); }
+
+  .zev-foot__news { display: flex; margin-top: 18px; flex-wrap: wrap; gap: 0; }
+  .zev-foot__newsinput {
+    flex: 1 1 140px;
+    min-width: 0;
+    min-height: 44px;
+    padding: 12px 14px;
+    border: 1px solid var(--zev-line-dark, #2C2C2C);
+    border-right: 0;
+    border-radius: var(--zev-radius, 0);
+    background: transparent;
+    font: 400 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-on-dark, #F8F8F6);
+  }
+  .zev-foot__newsinput::placeholder { color: var(--zev-quiet, #6B6764); }
+  .zev-foot__newsbtn {
+    min-height: 44px;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: var(--zev-radius, 0);
+    background: var(--zev-emerald, #0F6452);
+    color: #fff;
+    font: 500 12px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color .15s ease;
+  }
+  .zev-foot__newsbtn:hover { background: var(--zev-emerald-hover, #0C5343); }
+  .zev-foot__newsnote {
+    flex: 1 0 100%;
+    margin: 10px 0 0;
+    font: 400 12px/1.5 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-on-dark-soft, #D8D4CC);
+  }
+
+  .zev-foot__legal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 22px;
+    border-top: 1px solid var(--zev-line-dark, #2C2C2C);
+  }
+  .zev-foot__copy {
+    margin: 0;
+    font: 400 12px/1.6 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-quiet, #6B6764);
+  }
+  .zev-foot__policies {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .zev-foot__policies li + li::before {
+    content: '·';
+    margin-right: 6px;
+    color: var(--zev-quiet, #6B6764);
+  }
+  .zev-foot__policies a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font: 400 12px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-quiet, #6B6764);
+    text-decoration: none;
+  }
+  .zev-foot__policies a:hover { color: var(--zev-on-dark, #F8F8F6); }
+
+  @media (max-width: 989px) {
+    .zev-foot__cols { grid-template-columns: 1fr 1fr; gap: 32px; padding-bottom: 36px; }
+  }
+  @media (max-width: 749px) {
+    .zev-foot { padding: 36px var(--zev-gutter, 20px) 24px; }
+    .zev-foot__cols { grid-template-columns: 1fr; gap: 26px; padding-bottom: 26px; }
+    .zev-foot__line { max-width: none; }
+    .zev-foot__legal { justify-content: flex-start; gap: 4px; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Footer — Zevaraz",
+  "tag": "footer",
+  "class": "zev-foot-section",
+  "settings": [
+    { "id": "logo", "type": "image_picker", "label": "Logo" },
+    { "id": "wordmark", "type": "text", "label": "Wordmark (used when no logo is set)", "default": "ZEVARAZ" },
+    {
+      "id": "brand_line",
+      "type": "textarea",
+      "label": "Brand line",
+      "default": "92.5 hallmarked sterling silver, made in Vaishali Nagar, Jaipur. Heritage motifs, modern silhouettes, everyday wear."
+    },
+    {
+      "id": "copyright",
+      "type": "text",
+      "label": "Copyright line",
+      "default": "© 2026 Zevaraz Jewels · Jaipur, Rajasthan"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "settings": [
+        { "id": "heading", "type": "text", "label": "Heading" },
+        { "id": "menu", "type": "link_list", "label": "Menu" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text column",
+      "settings": [
+        { "id": "heading", "type": "text", "label": "Heading" },
+        { "id": "body", "type": "richtext", "label": "Body" }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Contact column",
+      "settings": [
+        { "id": "heading", "type": "text", "label": "Heading", "default": "Talk to us" },
+        { "id": "whatsapp_number", "type": "text", "label": "WhatsApp number", "default": "919461234296", "info": "Country code first, digits only." },
+        { "id": "whatsapp_label", "type": "text", "label": "WhatsApp label", "default": "WhatsApp +91 94612 34296" },
+        { "id": "email", "type": "text", "label": "Email", "default": "hello.zevaraz@gmail.com" },
+        { "id": "hours", "type": "text", "label": "Hours", "default": "Mon–Sat, 10am–7pm IST" },
+        { "id": "show_newsletter", "type": "checkbox", "label": "Show newsletter signup", "default": true },
+        { "id": "newsletter_placeholder", "type": "text", "label": "Newsletter placeholder", "default": "Your email" },
+        { "id": "newsletter_button", "type": "text", "label": "Newsletter button", "default": "Join" }
+      ]
+    }
+  ],
+  "max_blocks": 3
+}
+{% endschema %}

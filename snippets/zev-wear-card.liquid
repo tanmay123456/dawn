@@ -1,0 +1,21 @@
+{%- comment -%}
+  Simplified card for "Wear it with": image, title, price. Nothing else.
+  Usage: {% render 'zev-wear-card', item: product %}
+{%- endcomment -%}
+<a class="zev-wearcard" href="{{ item.url }}">
+  <span class="zev-wearcard__media">
+    {%- if item.featured_media -%}
+      {{ item.featured_media
+         | image_url: width: 900
+         | image_tag:
+             loading: 'lazy',
+             sizes: '(min-width: 990px) 22vw, 45vw',
+             widths: '300,450,600,900',
+             alt: item.featured_media.alt | default: item.title }}
+    {%- endif -%}
+  </span>
+  <span class="zev-wearcard__meta">
+    <span class="zev-wearcard__title">{{ item.title }}</span>
+    <span class="zev-wearcard__price">{{ item.price | money }}</span>
+  </span>
+</a>
