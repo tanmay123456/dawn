@@ -10,112 +10,46 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
-      "blocks": {
-        "zev_eyebrow": {
-          "type": "custom_liquid",
-          "settings": { "custom_liquid": "{% render 'zev-pdp-eyebrow', product: product %}" }
-        },
-        "title": { "type": "title", "settings": {} },
-        "zev_material": {
-          "type": "custom_liquid",
-          "settings": { "custom_liquid": "{% render 'zev-pdp-material', product: product %}" }
-        },
-        "price": { "type": "price", "settings": {} },
-        "zev_chips": {
-          "type": "custom_liquid",
-          "settings": { "custom_liquid": "{% render 'zev-proof-chips', product: product %}" }
-        },
-        "description": { "type": "description", "settings": {} },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": { "picker_type": "button", "swatch_shape": "none" }
-        },
-        "zev_buy": {
-          "type": "custom_liquid",
-          "settings": { "custom_liquid": "{% render 'zev-pdp-buy', product: product, section: section %}" }
-        },
-        "zev_whatsapp": {
-          "type": "custom_liquid",
-          "settings": { "custom_liquid": "{% render 'zev-pdp-whatsapp', product: product %}" }
-        },
-        "zev_accordion": {
-          "type": "custom_liquid",
-          "settings": { "custom_liquid": "{% render 'zev-pdp-accordion', product: product %}" }
-        },
-        "zev_delivery": {
-          "type": "custom_liquid",
-          "settings": { "custom_liquid": "{% render 'zev-pdp-delivery', product: product %}" }
-        },
-        "judge_me_reviews_review_widget_tx39eq": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": true,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "zev_eyebrow",
-        "title",
-        "zev_material",
-        "price",
-        "zev_chips",
-        "description",
-        "variant_picker",
-        "zev_buy",
-        "zev_whatsapp",
-        "zev_accordion",
-        "zev_delivery",
-        "judge_me_reviews_review_widget_tx39eq"
-      ],
-      "custom_css": [],
+      "type": "zev-main-product",
       "settings": {
-        "enable_sticky_info": true,
-        "color_scheme": "scheme-1",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "thumbnail",
-        "mobile_thumbnails": "hide",
-        "media_position": "left",
-        "image_zoom": "hover",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "model_tile_label": "On the ear"
       }
     },
-    "zev_proof_band": {
+    "proof": {
       "type": "zev-proof-band",
       "blocks": {
-        "p1": { "type": "proof", "settings": { "title": "Look for the 925 stamp", "note": "Inside the band or on the clasp, laser-marked." } },
-        "p2": { "type": "proof", "settings": { "title": "BIS hallmark triangle", "note": "The mark of the Bureau of Indian Standards." } },
-        "p3": { "type": "proof", "settings": { "title": "It tarnishes, gently", "note": "Real silver ages. Plating flakes. Ours polishes back." } }
+        "p1": {
+          "type": "proof",
+          "settings": {
+            "title": "Look for the 925 stamp",
+            "note": "Inside the band or on the clasp, laser-marked."
+          }
+        },
+        "p2": {
+          "type": "proof",
+          "settings": {
+            "title": "BIS hallmark triangle",
+            "note": "The mark of the Bureau of Indian Standards."
+          }
+        },
+        "p3": {
+          "type": "proof",
+          "settings": {
+            "title": "It tarnishes, gently",
+            "note": "Real silver ages. Plating flakes. Ours polishes back."
+          }
+        }
       },
       "block_order": ["p1", "p2", "p3"],
       "settings": {}
     },
-    "related-products": {
-      "type": "related-products",
+    "wear": {
+      "type": "zev-wear-with",
       "settings": {
         "heading": "Wear it with",
-        "heading_size": "h2",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "columns_mobile": "2",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "padding_top": 36,
-        "padding_bottom": 28
+        "count": 4
       }
     }
   },
-  "order": ["main", "zev_proof_band", "related-products"]
+  "order": ["main", "proof", "wear"]
 }
