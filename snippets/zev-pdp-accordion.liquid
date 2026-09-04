@@ -5,7 +5,9 @@
     Materials & weight     custom.metal_purity + custom.gross_weight
     Size & fit             custom.size_fit          (rich text)
     Shipping & returns     shop policies + page setting
-    How to care for silver custom.care              (rich text)
+    How to care for silver custom.care (rich text), falling back to the
+                           standard ZEVARAZ Jewellery Care Guide wording so
+                           the row is never empty on any product
 {%- endcomment -%}
 
 {%- liquid
@@ -31,9 +33,17 @@
       echo shop.refund_policy.body
     endif
   endcapture
+
+  capture care_html
+    if care != blank
+      echo care
+    else
+      echo '<p>Keep your silver away from water, perfumes and harsh chemicals.</p><p>Store it dry, in the original box or a soft pouch.</p><p>Clean with a soft dry cloth after each use.</p><p>Remove it before workouts, swimming and other heavy activity.</p>'
+    endif
+  endcapture
 -%}
 
-{%- if materials != blank or size_fit != blank or shipping != blank or care != blank -%}
+{%- if materials != blank or size_fit != blank or shipping != blank or care_html != blank -%}
   <div class="zev-acc">
     {%- if materials != blank -%}
       <details class="zev-acc__row">
@@ -56,10 +66,10 @@
       </details>
     {%- endif -%}
 
-    {%- if care != blank -%}
+    {%- if care_html != blank -%}
       <details class="zev-acc__row">
         <summary class="zev-acc__label">How to care for silver<span class="zev-acc__mark" aria-hidden="true">+</span></summary>
-        <div class="zev-acc__body">{{ care }}</div>
+        <div class="zev-acc__body">{{ care_html }}</div>
       </details>
     {%- endif -%}
   </div>

@@ -2,9 +2,16 @@
   Zevaraz — Collection header (screen 2)
   Stone. Copy left, image right. One sentence of character before any filtering.
 
-  Description comes from the collection's own description field; the tag line
-  from the collection metafield custom.tag_line. Nothing is hard-coded, so the
-  owner edits a collection in admin and this follows.
+  The image comes from the collection's own Image field in admin
+  (Products → Collections → [collection] → Image), never from a section
+  setting. A section setting here would be shared by every collection,
+  because all collections render through the one collection template —
+  set it for Necklaces and Aabha, Kala and Ratna would change too.
+  There is deliberately no image setting in the schema below, so that
+  mistake cannot be made from the theme editor.
+
+  Tag line comes from the collection metafield custom.tag_line, description
+  from the collection's own description field. Nothing is hard-coded.
 {%- endcomment -%}
 
 {% render 'zev-assets' %}
@@ -55,10 +62,9 @@
     {%- endif -%}
   </div>
 
-  {%- assign header_image = section.settings.image | default: collection.image -%}
-  {%- if header_image -%}
+  {%- if collection.image -%}
     <div class="zev-chead__media">
-      {{ header_image
+      {{ collection.image
          | image_url: width: 1600
          | image_tag:
              loading: 'eager',
@@ -136,10 +142,8 @@
   "class": "zev-chead-section",
   "settings": [
     {
-      "id": "image",
-      "type": "image_picker",
-      "label": "Image",
-      "info": "Optional. Falls back to the collection's own image."
+      "type": "paragraph",
+      "content": "The image on this header comes from the collection itself. Set it under Products → Collections → open the collection → Image. There is no image setting here on purpose: this section is shared by every collection, so one setting would change all of them at once."
     }
   ],
   "enabled_on": { "templates": ["collection"] }

@@ -4,7 +4,9 @@
   apart the way two separate theme blocks do.
 
   Uses Dawn's own <product-form> element, so AJAX add-to-cart and the cart
-  drawer behave exactly as the theme expects.
+  drawer behave exactly as the theme expects. The variant id input is live
+  (not disabled) because zev-main-product owns variant switching and writes
+  the selected id into it.
 {%- endcomment -%}
 
 {%- liquid
@@ -14,12 +16,12 @@
 
 <product-form class="zev-buy" data-hide-errors="false">
   {%- form 'product', product, id: form_id, class: 'zev-buy__form', novalidate: 'novalidate' -%}
-    <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+    <input type="hidden" name="id" value="{{ variant.id }}" data-zev-variant-id>
 
     <div class="zev-buy__row">
       <quantity-input class="zev-qty">
         <button class="zev-qty__btn" name="minus" type="button">
-          <span class="visually-hidden">Decrease quantity</span>−
+          <span class="visually-hidden">Decrease quantity</span>&minus;
         </button>
         <input
           class="zev-qty__input"
