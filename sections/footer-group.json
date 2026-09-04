@@ -8,64 +8,47 @@
  * ------------------------------------------------------------
  */
 {
-  "name": "t:sections.footer.name",
+  "name": "Footer",
   "type": "footer",
   "sections": {
     "footer": {
-      "type": "footer",
+      "type": "zev-footer",
       "blocks": {
-        "brand": {
-          "type": "text",
-          "settings": {
-            "heading": "",
-            "subtext": "<p>92.5 hallmarked sterling silver, made in Vaishali Nagar, Jaipur. Heritage motifs, modern silhouettes, everyday wear.</p>"
-          }
-        },
         "collections": {
           "type": "text",
           "settings": {
             "heading": "Collections",
-            "subtext": "<p><a href=\"/collections/aabha\" title=\"Aabha\">Aabha · Heritage</a><br/><a href=\"/collections/nira\" title=\"Nira\">Nira · Everyday</a><br/><a href=\"/collections/kala\" title=\"Kala\">Kala · Oxidised</a><br/><a href=\"/collections/ratna\" title=\"Ratna\">Ratna · Gemstone</a></p>"
+            "body": "<p><a href=\"/collections/aabha\">Aabha · Heritage</a><br/><a href=\"/collections/nira\">Nira · Everyday</a><br/><a href=\"/collections/kala\">Kala · Oxidised</a><br/><a href=\"/collections/ratna\">Ratna · Gemstone</a></p>"
           }
         },
         "help": {
-          "type": "link_list",
+          "type": "menu",
           "settings": {
             "heading": "Help & care",
             "menu": "footer-help"
           }
         },
         "talk": {
-          "type": "text",
+          "type": "contact",
           "settings": {
             "heading": "Talk to us",
-            "subtext": "<p><a href=\"https://wa.me/919461234296\">WhatsApp +91 94612 34296</a><br/><a href=\"mailto:hello.zevaraz@gmail.com\">hello.zevaraz@gmail.com</a><br/>Mon–Sat, 10am–7pm IST</p>"
+            "whatsapp_number": "919461234296",
+            "whatsapp_label": "WhatsApp +91 94612 34296",
+            "email": "hello.zevaraz@gmail.com",
+            "hours": "Mon–Sat, 10am–7pm IST",
+            "show_newsletter": true,
+            "newsletter_placeholder": "Your email",
+            "newsletter_button": "Join"
           }
         }
       },
-      "block_order": [
-        "brand",
-        "collections",
-        "help",
-        "talk"
-      ],
+      "block_order": ["collections", "help", "talk"],
       "settings": {
-        "color_scheme": "scheme-3",
-        "newsletter_enable": true,
-        "newsletter_heading": "",
-        "enable_follow_on_shop": false,
-        "show_social": true,
-        "enable_country_selector": false,
-        "enable_language_selector": false,
-        "payment_enable": false,
-        "show_policy": true,
-        "margin_top": 0,
-        "padding_top": 36,
-        "padding_bottom": 28
+        "wordmark": "ZEVARAZ",
+        "brand_line": "92.5 hallmarked sterling silver, made in Vaishali Nagar, Jaipur. Heritage motifs, modern silhouettes, everyday wear.",
+        "copyright": "© 2026 Zevaraz Jewels · Jaipur, Rajasthan"
       }
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["footer"]
 }
