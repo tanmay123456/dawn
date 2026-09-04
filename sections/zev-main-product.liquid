@@ -1,0 +1,516 @@
+{%- comment -%}
+  Zevaraz — Product page (README section 3)
+
+  Replaces Dawn's main-product section outright. Everything above Add to cart is
+  identity or proof and nothing else, so the following are deliberately absent:
+  the duplicated title, the Product Code line, the vendor line, Dawn's
+  Regular price / Sale price scaffolding, the Share widget, "View full details",
+  and the second image strip Dawn prints under the gallery.
+
+  The buy box order is fixed by the design. Do not rearrange it.
+    1 eyebrow · 2 title · 3 material line · 4 price · 5 chips · 6 description
+    7 variants · 8 quantity + add · 9 buy it now · 10 WhatsApp · 11 accordion
+    12 delivery panel
+{%- endcomment -%}
+
+{% render 'zev-assets' %}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign media_count = product.media.size
+  assign show_compare = false
+  if variant.compare_at_price > variant.price and variant.compare_at_price > 0
+    assign show_compare = true
+  endif
+  assign model_index = 0
+  if media_count > 1
+    assign model_index = media_count | minus: 1
+  endif
+-%}
+
+<div class="zev-pdp" id="zev-pdp-{{ section.id }}" data-zev-pdp>
+
+  <div class="zev-pdp__gallery">
+    <nav class="zev-pdp__crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      {%- if collection -%}
+        <span aria-hidden="true">&middot;</span>
+        <a href="{{ collection.url }}">{{ collection.title }}</a>
+      {%- endif -%}
+      <span aria-hidden="true">&middot;</span>
+      <span aria-current="page">{{ product.title }}</span>
+    </nav>
+
+    <div class="zev-pdp__galleryrow">
+      {%- if media_count > 1 -%}
+        <div class="zev-pdp__thumbs" role="tablist" aria-label="Product images">
+          {%- for media in product.media -%}
+            <button
+              class="zev-pdp__thumb{% if forloop.first %} is-active{% endif %}"
+              type="button"
+              role="tab"
+              data-zev-thumb="{{ forloop.index0 }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            >
+              {{ media.preview_image
+                 | image_url: width: 264
+                 | image_tag: loading: 'lazy', widths: '88,176,264', alt: '' }}
+            </button>
+          {%- endfor -%}
+
+          {%- if model_index > 0 -%}
+            <button
+              class="zev-pdp__thumb zev-pdp__thumb--model"
+              type="button"
+              data-zev-thumb="{{ model_index }}"
+            >{{ section.settings.model_tile_label | default: 'On the ear' }}</button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="zev-pdp__track" data-zev-track>
+        {%- for media in product.media -%}
+          {%- if forloop.first -%}{%- assign zev_load = 'eager' -%}{%- else -%}{%- assign zev_load = 'lazy' -%}{%- endif -%}
+          <div class="zev-pdp__slide{% if forloop.first %} is-active{% endif %}" data-zev-slide="{{ forloop.index0 }}">
+            {{ media.preview_image
+               | image_url: width: 1600
+               | image_tag:
+                   loading: zev_load,
+                   sizes: '(min-width: 990px) 46vw, 100vw',
+                   widths: '450,700,900,1200,1600',
+                   class: 'zev-pdp__image',
+                   alt: media.alt | default: product.title }}
+          </div>
+        {%- else -%}
+          <div class="zev-pdp__slide is-active" data-zev-slide="0">
+            <div class="zev-pdp__image zev-pdp__image--empty"></div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if media_count > 1 -%}
+      <div class="zev-pdp__dots" data-zev-dots aria-hidden="true">
+        {%- for media in product.media -%}
+          <span class="zev-pdp__dot{% if forloop.first %} is-active{% endif %}"></span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="zev-pdp__buy">
+    {% render 'zev-pdp-eyebrow', product: product %}
+
+    <h1 class="zev-pdp__title">{{ product.title }}</h1>
+
+    {% render 'zev-pdp-material', product: product %}
+
+    <p class="zev-pdp__pricerow">
+      <span class="zev-pdp__price" data-zev-price>{{ variant.price | money }}</span>
+      <s class="zev-pdp__was" data-zev-was {% unless show_compare %}hidden{% endunless %}>
+        {%- if show_compare %}{{ variant.compare_at_price | money }}{% endif -%}
+      </s>
+      <span class="zev-pdp__tax">Inclusive of all taxes</span>
+    </p>
+
+    {% render 'zev-proof-chips', product: product %}
+
+    {%- if product.description != blank -%}
+      <div class="zev-pdp__desc">{{ product.description }}</div>
+    {%- endif -%}
+
+    {%- unless product.has_only_default_variant -%}
+      <div class="zev-pdp__options">
+        {%- for option in product.options_with_values -%}
+          {%- assign opt_index = forloop.index0 -%}
+          <fieldset class="zev-pdp__option">
+            <legend class="zev-pdp__optlabel">{{ option.name }}</legend>
+            <div class="zev-pdp__swatches">
+              {%- for value in option.values -%}
+                {%- assign uid = section.id | append: '-' | append: opt_index | append: '-' | append: forloop.index0 -%}
+                <input
+                  class="zev-pdp__radio visually-hidden"
+                  type="radio"
+                  id="zev-opt-{{ uid }}"
+                  name="zev-option-{{ section.id }}-{{ opt_index }}"
+                  value="{{ value | escape }}"
+                  data-zev-optindex="{{ opt_index }}"
+                  {% if option.selected_value == value %}checked{% endif %}
+                >
+                <label class="zev-pdp__swatch" for="zev-opt-{{ uid }}">{{ value }}</label>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endfor -%}
+      </div>
+    {%- endunless -%}
+
+    {% render 'zev-pdp-buy', product: product %}
+
+    {% render 'zev-pdp-whatsapp', product: product %}
+
+    {% render 'zev-pdp-accordion', product: product %}
+
+    {% render 'zev-pdp-delivery' %}
+  </div>
+
+  <script type="application/json" data-zev-variants>
+    {
+      "url": {{ product.url | json }},
+      "variants": [
+        {%- for v in product.variants -%}
+          {
+            "id": {{ v.id }},
+            "options": {{ v.options | json }},
+            "available": {{ v.available }},
+            "price": {{ v.price | money | json }},
+            "compare": {% if v.compare_at_price > v.price and v.compare_at_price > 0 %}{{ v.compare_at_price | money | json }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('zev-pdp-{{ section.id }}');
+    if (!root || root.dataset.zevReady === '1') return;
+    root.dataset.zevReady = '1';
+
+    /* ---------- gallery ---------- */
+    var track  = root.querySelector('[data-zev-track]');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-zev-slide]'));
+    var thumbs = Array.prototype.slice.call(root.querySelectorAll('[data-zev-thumb]'));
+    var dots   = Array.prototype.slice.call(root.querySelectorAll('.zev-pdp__dot'));
+    var mobile = window.matchMedia('(max-width: 749px)');
+
+    function select(i) {
+      slides.forEach(function (s, n) { s.classList.toggle('is-active', n === i); });
+      thumbs.forEach(function (t) {
+        var on = Number(t.getAttribute('data-zev-thumb')) === i;
+        t.classList.toggle('is-active', on);
+        if (t.hasAttribute('aria-selected')) t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      dots.forEach(function (d, n) { d.classList.toggle('is-active', n === i); });
+      if (mobile.matches && track && slides[i]) {
+        track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      }
+    }
+
+    thumbs.forEach(function (t) {
+      t.addEventListener('click', function () { select(Number(t.getAttribute('data-zev-thumb'))); });
+    });
+
+    if (track) {
+      track.addEventListener('scroll', function () {
+        if (!mobile.matches || !track.clientWidth) return;
+        var i = Math.round(track.scrollLeft / track.clientWidth);
+        dots.forEach(function (d, n) { d.classList.toggle('is-active', n === i); });
+      }, { passive: true });
+    }
+
+    /* ---------- variants ---------- */
+    var store = root.querySelector('[data-zev-variants]');
+    if (!store) return;
+
+    var payload;
+    try { payload = JSON.parse(store.textContent); } catch (e) { return; }
+
+    var radios  = Array.prototype.slice.call(root.querySelectorAll('.zev-pdp__radio'));
+    if (!radios.length) return;
+
+    var priceEl = root.querySelector('[data-zev-price]');
+    var wasEl   = root.querySelector('[data-zev-was]');
+    var addBtn  = root.querySelector('.zev-buy__add');
+    var addTxt  = addBtn ? addBtn.querySelector('span') : null;
+    var idInput = root.querySelector('[data-zev-variant-id]');
+
+    function chosen() {
+      var out = [];
+      radios.forEach(function (r) {
+        if (r.checked) out[Number(r.getAttribute('data-zev-optindex'))] = r.value;
+      });
+      return out;
+    }
+
+    function findVariant(sel) {
+      for (var i = 0; i < payload.variants.length; i++) {
+        var v = payload.variants[i], ok = true;
+        for (var j = 0; j < sel.length; j++) { if (v.options[j] !== sel[j]) { ok = false; break; } }
+        if (ok) return v;
+      }
+      return null;
+    }
+
+    /* Sold-out values stay visible and struck through, never hidden. */
+    function markAvailability() {
+      var sel = chosen();
+      radios.forEach(function (r) {
+        var idx = Number(r.getAttribute('data-zev-optindex'));
+        var probe = sel.slice();
+        probe[idx] = r.value;
+        var exists = false, available = false;
+        payload.variants.forEach(function (v) {
+          var ok = true;
+          for (var j = 0; j < probe.length; j++) { if (v.options[j] !== probe[j]) { ok = false; break; } }
+          if (ok) { exists = true; if (v.available) available = true; }
+        });
+        var label = root.querySelector('label[for="' + r.id + '"]');
+        if (label) label.classList.toggle('is-soldout', exists && !available);
+        r.disabled = !exists;
+      });
+    }
+
+    function update() {
+      var v = findVariant(chosen());
+      markAvailability();
+      if (!v) {
+        if (addBtn) { addBtn.disabled = true; if (addTxt) addTxt.textContent = 'Unavailable'; }
+        return;
+      }
+      if (priceEl) priceEl.textContent = v.price;
+      if (wasEl) {
+        if (v.compare) { wasEl.textContent = v.compare; wasEl.hidden = false; }
+        else { wasEl.textContent = ''; wasEl.hidden = true; }
+      }
+      if (idInput) idInput.value = v.id;
+      if (addBtn) {
+        addBtn.disabled = !v.available;
+        if (addTxt) addTxt.textContent = v.available ? 'Add to cart' : 'Sold out';
+      }
+      if (window.history && history.replaceState) {
+        history.replaceState({}, '', payload.url + '?variant=' + v.id);
+      }
+    }
+
+    radios.forEach(function (r) { r.addEventListener('change', update); });
+    markAvailability();
+  })();
+</script>
+
+{%- style -%}
+  .zev-pdp {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    background: var(--zev-ivory, #F8F8F6);
+  }
+  .zev-pdp__gallery {
+    padding: 44px 40px 60px var(--zev-gutter, 56px);
+    border-right: 1px solid var(--zev-line, #E6E2DA);
+    min-width: 0;
+    overflow: hidden;
+  }
+  .zev-pdp__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 24px;
+    font: 400 12px/1.4 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-pdp__crumbs a { color: inherit; text-decoration: none; }
+  .zev-pdp__crumbs a:hover { color: var(--zev-ink, #1C1C1C); }
+
+  .zev-pdp__galleryrow { display: flex; gap: 14px; min-width: 0; }
+
+  .zev-pdp__thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 0 0 88px;
+  }
+  .zev-pdp__thumb {
+    width: 88px;
+    height: 88px;
+    padding: 0;
+    border: 1px solid var(--zev-line, #E6E2DA);
+    border-radius: var(--zev-radius, 0);
+    background: #fff;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .zev-pdp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .zev-pdp__thumb.is-active { border-color: var(--zev-ink, #1C1C1C); }
+  .zev-pdp__thumb--model {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+    background: var(--zev-graphite, #1C1C1C);
+    border-color: var(--zev-graphite, #1C1C1C);
+    font: 400 11px/1.35 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-silver, #C0C0C0);
+  }
+
+  .zev-pdp__track {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .zev-pdp__slide {
+    grid-area: 1 / 1;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #fff;
+    border: 1px solid var(--zev-line, #E6E2DA);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease;
+  }
+  .zev-pdp__slide.is-active { opacity: 1; visibility: visible; }
+  .zev-pdp__image { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .zev-pdp__image--empty { background: var(--zev-stone, #F1EEE8); }
+
+  .zev-pdp__dots { display: none; }
+
+  .zev-pdp__buy {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+    padding: 56px var(--zev-gutter, 56px) 60px 44px;
+    min-width: 0;
+  }
+  .zev-pdp__title {
+    margin: 0;
+    font: 600 38px/1.14 var(--zev-font-display, 'Playfair Display', serif);
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-pdp__pricerow {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .zev-pdp__price {
+    font: 500 30px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    font-variant-numeric: tabular-nums;
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-pdp__was {
+    font: 400 18px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-pdp__was[hidden] { display: none; }
+  .zev-pdp__tax {
+    font: 400 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-taupe, #A8999C);
+  }
+  .zev-pdp__desc {
+    font: 400 15px/1.75 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-body-soft, #5A5654);
+  }
+  .zev-pdp__desc p { margin: 0 0 10px; }
+  .zev-pdp__desc p:last-child { margin-bottom: 0; }
+
+  .zev-pdp__options { display: flex; flex-direction: column; gap: 18px; }
+  .zev-pdp__option { margin: 0; padding: 0; border: 0; }
+  .zev-pdp__optlabel {
+    padding: 0;
+    margin-bottom: 10px;
+    font: 500 12px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-pdp__swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+  .zev-pdp__swatch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 13px 20px;
+    border: 1px solid var(--zev-line-field, #DCD8D0);
+    border-radius: var(--zev-radius, 0);
+    background: transparent;
+    font: 500 13px/1 var(--zev-font-text, 'Montserrat', sans-serif);
+    color: var(--zev-quiet, #6B6764);
+    cursor: pointer;
+  }
+  .zev-pdp__radio:checked + .zev-pdp__swatch {
+    border-color: var(--zev-ink, #1C1C1C);
+    color: var(--zev-ink, #1C1C1C);
+  }
+  .zev-pdp__radio:focus-visible + .zev-pdp__swatch { outline: 2px solid var(--zev-ink, #1C1C1C); outline-offset: 2px; }
+  .zev-pdp__swatch.is-soldout {
+    color: var(--zev-taupe, #A8999C);
+    text-decoration: line-through;
+    pointer-events: none;
+  }
+
+  @media (max-width: 989px) {
+    .zev-pdp { grid-template-columns: 1fr; }
+    .zev-pdp__gallery {
+      border-right: 0;
+      border-bottom: 1px solid var(--zev-line, #E6E2DA);
+      padding: 20px var(--zev-gutter, 20px) 24px;
+    }
+    .zev-pdp__buy { padding: 28px var(--zev-gutter, 20px) 40px; }
+  }
+
+  @media (max-width: 749px) {
+    .zev-pdp__crumbs { margin-bottom: 16px; font-size: 12px; }
+    .zev-pdp__galleryrow { gap: 0; }
+    .zev-pdp__thumbs { display: none; }
+    .zev-pdp__track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .zev-pdp__track::-webkit-scrollbar { display: none; }
+    .zev-pdp__slide {
+      flex: 0 0 100%;
+      width: 100%;
+      scroll-snap-align: start;
+      opacity: 1;
+      visibility: visible;
+      transition: none;
+    }
+    .zev-pdp__dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+    }
+    .zev-pdp__dot {
+      width: 6px;
+      height: 6px;
+      background: var(--zev-line-field, #DCD8D0);
+    }
+    .zev-pdp__dot.is-active { background: var(--zev-ink, #1C1C1C); }
+    .zev-pdp__title { font-size: 30px; }
+    .zev-pdp__price { font-size: 26px; }
+    .zev-pdp__was { font-size: 16px; }
+    .zev-pdp__tax { font-size: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zev-pdp__slide { transition: none; }
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Product — Zevaraz",
+  "tag": "section",
+  "class": "zev-pdp-section",
+  "settings": [
+    {
+      "id": "model_tile_label",
+      "type": "text",
+      "label": "Model-shot tile label",
+      "default": "On the ear",
+      "info": "The graphite tile at the end of the thumbnail column. It jumps to the last image, which should be the on-model shot."
+    }
+  ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}
